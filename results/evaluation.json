@@ -1,0 +1,899 @@
+{
+  "status": "passed",
+  "generated_at": "2026-11-17T10:43:42.492064+00:00",
+  "scope": "Offline component and HTTP tests. Optional model transport is mocked; no live LLM, real shipment or end-user study.",
+  "total": 53,
+  "passed": 53,
+  "categories": {
+    "DocumentTests": {
+      "passed": 11,
+      "total": 11
+    },
+    "HTTPTests": {
+      "passed": 6,
+      "total": 6
+    },
+    "ModelContractTests": {
+      "passed": 3,
+      "total": 3
+    },
+    "RateTests": {
+      "passed": 24,
+      "total": 24
+    },
+    "WorkflowTests": {
+      "passed": 9,
+      "total": 9
+    }
+  },
+  "cases": [
+    {
+      "id": "test_project.DocumentTests.test_01_valid_draft",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.DocumentTests.test_02_missing_contacts",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.DocumentTests.test_03_quantity_mismatch",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.DocumentTests.test_04_incorrect_total",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.DocumentTests.test_05_decimal_arithmetic",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.DocumentTests.test_06_vague_description",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.DocumentTests.test_07_invalid_item",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.DocumentTests.test_08_html_escaped",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.DocumentTests.test_09_packing_contains_package",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.DocumentTests.test_10_csv_preserves_other_document",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.DocumentTests.test_11_csv_rejects_bad_headers",
+      "category": "DocumentTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.HTTPTests.test_01_health_and_assets",
+      "category": "HTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.HTTPTests.test_02_create_quote_restore",
+      "category": "HTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.HTTPTests.test_03_conflict_preserves_saved_state",
+      "category": "HTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.HTTPTests.test_04_reject_external_origin",
+      "category": "HTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.HTTPTests.test_05_rollback_invalid_update",
+      "category": "HTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.HTTPTests.test_06_export_document",
+      "category": "HTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.ModelContractTests.test_00_baseline_and_retrieval_arms",
+      "category": "ModelContractTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.ModelContractTests.test_01_function_call_roundtrip",
+      "category": "ModelContractTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.ModelContractTests.test_02_model_failure_uses_workflow",
+      "category": "ModelContractTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_01_source_price_anchors",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_02_east_zone_anchor",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_03_half_kg_ordinary_packaging",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_04_weight_rounded_up",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_05_dimensional_weight",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_06_weight_range_handoff",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_07_oversize_handoff",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_08_girth_handoff",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_09_origin_eligibility",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_10_other_destination",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_11_missing_dimensions",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_12_zip_validation",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_13_state_zip_conflict",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_14_zip4",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_15_non_finite_or_negative",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_16_inbound_fee",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_17_residential_fee",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_18_remote_excludes_residential",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_19_explicit_fuel_scenario",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_20_unknown_fuel_not_zero",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_21_budget_partial",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_22_deadline_not_invented",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_23_restricted_goods",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.RateTests.test_24_table_completeness",
+      "category": "RateTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.WorkflowTests.test_01_multi_turn_update",
+      "category": "WorkflowTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.WorkflowTests.test_02_persistence",
+      "category": "WorkflowTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.WorkflowTests.test_03_update_invalidates_old_results",
+      "category": "WorkflowTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.WorkflowTests.test_04_english_retrieval",
+      "category": "WorkflowTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.WorkflowTests.test_05_offline_tracking",
+      "category": "WorkflowTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.WorkflowTests.test_06_no_accidental_live_query",
+      "category": "WorkflowTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.WorkflowTests.test_07_trace_and_citations",
+      "category": "WorkflowTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.WorkflowTests.test_08_timestamps_sorted_in_utc",
+      "category": "WorkflowTests",
+      "passed": true
+    },
+    {
+      "id": "test_project.WorkflowTests.test_09_document_edit_preserves_rate",
+      "category": "WorkflowTests",
+      "passed": true
+    }
+  ],
+  "retrieval": {
+    "count": 18,
+    "methods": {
+      "keyword": {
+        "top1": 16,
+        "top3": 18,
+        "cases": [
+          {
+            "query": "体积重如何计算？",
+            "expected": "weight",
+            "returned": [
+              "weight",
+              "fuel",
+              "nonstandard"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "How is dimensional weight calculated?",
+            "expected": "weight",
+            "returned": [
+              "weight",
+              "remote",
+              "nonstandard"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "美国邮编如何分区？",
+            "expected": "us-zone",
+            "returned": [
+              "us-zone",
+              "remote",
+              "inbound"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Which zone applies to California ZIP codes?",
+            "expected": "us-zone",
+            "returned": [
+              "us-zone",
+              "fuel",
+              "weight"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "广东和福建适用这个报价吗？",
+            "expected": "rate-scope",
+            "returned": [
+              "rate-scope",
+              "fuel"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "What account eligibility applies to these rates?",
+            "expected": "rate-scope",
+            "returned": [
+              "rate-scope",
+              "fuel",
+              "remote"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "燃油附加费百分比是多少？",
+            "expected": "fuel",
+            "returned": [
+              "fuel",
+              "inbound",
+              "nonstandard"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Does residential delivery add to ODA charges?",
+            "expected": "remote",
+            "returned": [
+              "remote",
+              "transit",
+              "weight"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "偏远地区费和住宅费是否重复？",
+            "expected": "remote",
+            "returned": [
+              "remote",
+              "us-zone",
+              "rate-scope"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "超过尺寸上限怎么办？",
+            "expected": "nonstandard",
+            "returned": [
+              "weight",
+              "nonstandard"
+            ],
+            "top1": false,
+            "top3": true
+          },
+          {
+            "query": "美国入境处理费是多少？",
+            "expected": "inbound",
+            "returned": [
+              "inbound",
+              "weight",
+              "us-zone"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "What fields belong on a commercial invoice?",
+            "expected": "invoice",
+            "returned": [
+              "invoice",
+              "remote",
+              "inbound"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "货品只写 gifts 可以吗？",
+            "expected": "description",
+            "returned": [
+              "description",
+              "invoice"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "How do packing list quantities match the invoice?",
+            "expected": "packing",
+            "returned": [
+              "packing",
+              "invoice",
+              "weight"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "官方模拟运单有哪些物流节点？",
+            "expected": "tracking",
+            "returned": [
+              "tracking",
+              "invoice",
+              "packing"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Can an arrival deadline be guaranteed?",
+            "expected": "transit",
+            "returned": [
+              "tracking",
+              "transit",
+              "fuel"
+            ],
+            "top1": false,
+            "top3": true
+          },
+          {
+            "query": "电池物品可以寄吗？",
+            "expected": "dangerous",
+            "returned": [
+              "dangerous"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Are dangerous goods or liquids accepted?",
+            "expected": "dangerous",
+            "returned": [
+              "dangerous",
+              "description",
+              "us-zone"
+            ],
+            "top1": true,
+            "top3": true
+          }
+        ]
+      },
+      "bm25": {
+        "top1": 17,
+        "top3": 18,
+        "cases": [
+          {
+            "query": "体积重如何计算？",
+            "expected": "weight",
+            "returned": [
+              "weight",
+              "fuel",
+              "nonstandard"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "How is dimensional weight calculated?",
+            "expected": "weight",
+            "returned": [
+              "weight",
+              "nonstandard",
+              "tracking"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "美国邮编如何分区？",
+            "expected": "us-zone",
+            "returned": [
+              "us-zone",
+              "inbound",
+              "tracking"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Which zone applies to California ZIP codes?",
+            "expected": "us-zone",
+            "returned": [
+              "us-zone",
+              "fuel",
+              "description"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "广东和福建适用这个报价吗？",
+            "expected": "rate-scope",
+            "returned": [
+              "rate-scope",
+              "fuel"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "What account eligibility applies to these rates?",
+            "expected": "rate-scope",
+            "returned": [
+              "rate-scope",
+              "remote",
+              "fuel"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "燃油附加费百分比是多少？",
+            "expected": "fuel",
+            "returned": [
+              "fuel",
+              "inbound",
+              "nonstandard"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Does residential delivery add to ODA charges?",
+            "expected": "remote",
+            "returned": [
+              "remote",
+              "transit",
+              "inbound"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "偏远地区费和住宅费是否重复？",
+            "expected": "remote",
+            "returned": [
+              "remote",
+              "us-zone",
+              "rate-scope"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "超过尺寸上限怎么办？",
+            "expected": "nonstandard",
+            "returned": [
+              "weight",
+              "nonstandard"
+            ],
+            "top1": false,
+            "top3": true
+          },
+          {
+            "query": "美国入境处理费是多少？",
+            "expected": "inbound",
+            "returned": [
+              "inbound",
+              "us-zone",
+              "weight"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "What fields belong on a commercial invoice?",
+            "expected": "invoice",
+            "returned": [
+              "invoice",
+              "transit",
+              "remote"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "货品只写 gifts 可以吗？",
+            "expected": "description",
+            "returned": [
+              "description",
+              "invoice"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "How do packing list quantities match the invoice?",
+            "expected": "packing",
+            "returned": [
+              "packing",
+              "invoice",
+              "description"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "官方模拟运单有哪些物流节点？",
+            "expected": "tracking",
+            "returned": [
+              "tracking",
+              "packing",
+              "invoice"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Can an arrival deadline be guaranteed?",
+            "expected": "transit",
+            "returned": [
+              "transit",
+              "tracking",
+              "remote"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "电池物品可以寄吗？",
+            "expected": "dangerous",
+            "returned": [
+              "dangerous"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Are dangerous goods or liquids accepted?",
+            "expected": "dangerous",
+            "returned": [
+              "dangerous",
+              "description",
+              "rate-scope"
+            ],
+            "top1": true,
+            "top3": true
+          }
+        ]
+      },
+      "hybrid": {
+        "top1": 17,
+        "top3": 18,
+        "cases": [
+          {
+            "query": "体积重如何计算？",
+            "expected": "weight",
+            "returned": [
+              "weight",
+              "fuel",
+              "nonstandard"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "How is dimensional weight calculated?",
+            "expected": "weight",
+            "returned": [
+              "weight",
+              "nonstandard",
+              "tracking"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "美国邮编如何分区？",
+            "expected": "us-zone",
+            "returned": [
+              "us-zone",
+              "inbound",
+              "tracking"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Which zone applies to California ZIP codes?",
+            "expected": "us-zone",
+            "returned": [
+              "us-zone",
+              "fuel",
+              "description"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "广东和福建适用这个报价吗？",
+            "expected": "rate-scope",
+            "returned": [
+              "rate-scope",
+              "fuel"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "What account eligibility applies to these rates?",
+            "expected": "rate-scope",
+            "returned": [
+              "rate-scope",
+              "remote",
+              "nonstandard"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "燃油附加费百分比是多少？",
+            "expected": "fuel",
+            "returned": [
+              "fuel",
+              "inbound",
+              "nonstandard"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Does residential delivery add to ODA charges?",
+            "expected": "remote",
+            "returned": [
+              "remote",
+              "inbound",
+              "transit"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "偏远地区费和住宅费是否重复？",
+            "expected": "remote",
+            "returned": [
+              "remote",
+              "us-zone",
+              "rate-scope"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "超过尺寸上限怎么办？",
+            "expected": "nonstandard",
+            "returned": [
+              "weight",
+              "nonstandard"
+            ],
+            "top1": false,
+            "top3": true
+          },
+          {
+            "query": "美国入境处理费是多少？",
+            "expected": "inbound",
+            "returned": [
+              "inbound",
+              "us-zone",
+              "weight"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "What fields belong on a commercial invoice?",
+            "expected": "invoice",
+            "returned": [
+              "invoice",
+              "transit",
+              "remote"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "货品只写 gifts 可以吗？",
+            "expected": "description",
+            "returned": [
+              "description",
+              "invoice"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "How do packing list quantities match the invoice?",
+            "expected": "packing",
+            "returned": [
+              "packing",
+              "invoice",
+              "description"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "官方模拟运单有哪些物流节点？",
+            "expected": "tracking",
+            "returned": [
+              "tracking",
+              "packing",
+              "invoice"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Can an arrival deadline be guaranteed?",
+            "expected": "transit",
+            "returned": [
+              "transit",
+              "tracking",
+              "remote"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "电池物品可以寄吗？",
+            "expected": "dangerous",
+            "returned": [
+              "dangerous"
+            ],
+            "top1": true,
+            "top3": true
+          },
+          {
+            "query": "Are dangerous goods or liquids accepted?",
+            "expected": "dangerous",
+            "returned": [
+              "dangerous",
+              "rate-scope",
+              "description"
+            ],
+            "top1": true,
+            "top3": true
+          }
+        ]
+      }
+    },
+    "note": "Small fixed developer-authored query set, not an independent held-out benchmark; no LLM evaluation."
+  }
+}

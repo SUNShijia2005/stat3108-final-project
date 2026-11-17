@@ -9,17 +9,20 @@ Checked against the local project on November 17, 2026. Different record types a
 | feasibility_check | 5 / 8 | 35 dated sailing candidates; 12 advisory-index entries; 2 operational events |
 | source_discovery | 2 / 12 | Initial samples: 8 standard transit times and 3 local charges |
 | ship24 | 0 / 0 | 1 official synthetic shipment with 4 tracking events |
+| parcel | Derived from existing PDFs / guides | 1,230 rate cells (3 services × 41 weights × 10 zones), plus 13 curated bilingual passages |
 | Total local raw PDFs | **39 / 106** | All 39 files have distinct SHA-256 hashes |
 
 Six FedEx PDFs within air_sources contain import/export rates, service zones, deferred-freight rates/zones, and surcharges. Cargo-airline schedules and ocean data are broader reference collections; the current China-to-US parcel task uses applicable parcel-service material.
 
-## Preparation remaining
+## Parcel preparation completed
 
-- Extract and validate required FedEx weight ranges, US zones, and applicable surcharges.
-- Organize parcel-specific rules for retrieval.
-- Download dedicated commercial-invoice and packing-list templates; no standalone templates were found during this inventory.
-- Build approximately 30 customer test cases and expected outcomes.
-- Validate real-shipment lookup when a usable number is available. No customer shipment has yet been queried.
+- Extracted 0.5–20.5 kg customer-packaged IPE/IP/IE rates; reconciled all 10 IP 10 kg zone anchors and checked representative PDF pages.
+- Encoded US zones, dimensional-weight rounding and source-version surcharge logic.
+- Prepared 13 topic passages for retrieval; this is a curated subset of the wider collection.
+- Authored printable invoice/packing-list drafts with CSV import and consistency checks; no downloaded official template is claimed.
+- Added 53 offline tests, 18 retrieval questions and 12 prepared model-comparison cases.
+
+Real-shipment lookup and live-model comparison remain unverified/unrun. Derived price cells are not independent shipments.
 
 ## Files and reproduction
 

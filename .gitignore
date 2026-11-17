@@ -8,3 +8,7 @@ __pycache__/
 /data/*/raw/
 /data/*/text/
 *.zip
+/var/
+/results/private/
+
+/tmp/
