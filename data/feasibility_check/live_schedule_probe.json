@@ -1,0 +1,62 @@
+[
+  {
+    "id": "pil_CNSHA_AUMEL",
+    "origin": "CNSHA",
+    "destination": "AUMEL",
+    "start_date": "2026-11-06",
+    "end_date": "2026-12-04",
+    "checked_date": "2026-11-06",
+    "access_method": "normal_public_website_query_flow",
+    "official_entry_point": "https://www.pilship.com/digital-solutions/?id=schedules&tab=customer",
+    "status": "validated_sailings",
+    "response_success": true,
+    "top_keys": [
+      "success",
+      "schedulePointToPoint"
+    ],
+    "bytes": 55396,
+    "html_characters": 50977,
+    "contains_date": true,
+    "sailing_count": 18
+  },
+  {
+    "id": "pil_CNSHA_BRSSZ",
+    "origin": "CNSHA",
+    "destination": "BRSSZ",
+    "start_date": "2026-11-06",
+    "end_date": "2026-12-04",
+    "checked_date": "2026-11-06",
+    "access_method": "normal_public_website_query_flow",
+    "official_entry_point": "https://www.pilship.com/digital-solutions/?id=schedules&tab=customer",
+    "status": "validated_sailings",
+    "response_success": true,
+    "top_keys": [
+      "success",
+      "schedulePointToPoint"
+    ],
+    "bytes": 41889,
+    "html_characters": 36773,
+    "contains_date": true,
+    "sailing_count": 12
+  },
+  {
+    "id": "pil_CNSHA_TZDAR",
+    "origin": "CNSHA",
+    "destination": "TZDAR",
+    "start_date": "2026-11-06",
+    "end_date": "2026-12-04",
+    "checked_date": "2026-11-06",
+    "access_method": "normal_public_website_query_flow",
+    "official_entry_point": "https://www.pilship.com/digital-solutions/?id=schedules&tab=customer",
+    "status": "validated_sailings",
+    "response_success": true,
+    "top_keys": [
+      "success",
+      "schedulePointToPoint"
+    ],
+    "bytes": 14469,
+    "html_characters": 12435,
+    "contains_date": true,
+    "sailing_count": 5
+  }
+]

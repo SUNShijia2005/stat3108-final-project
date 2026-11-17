@@ -1,0 +1,134 @@
+{
+  "data_type": "official_synthetic_sample",
+  "description": "Ship24 官方模拟运单，仅用于接口与界面测试。",
+  "source": "https://docs.ship24.com/status#ship24-sample-tracking-numbers",
+  "queried_at_utc": "2026-11-17T05:45:37.834174+00:00",
+  "tracking_number": "SHIP24_SAMPLE_DELIVERED_000",
+  "api_response": {
+    "data": {
+      "trackings": [
+        {
+          "tracker": {
+            "trackerId": "REDACTED_FOR_PUBLICATION",
+            "trackingNumber": "SHIP24_SAMPLE_DELIVERED_000",
+            "shipmentReference": null,
+            "courierCode": [],
+            "clientTrackerId": null,
+            "isSubscribed": true,
+            "isTracked": true,
+            "createdAt": "2026-11-17T05:45:37.845Z"
+          },
+          "shipment": {
+            "shipmentId": "REDACTED_FOR_PUBLICATION",
+            "statusCode": "delivery_delivered",
+            "statusCategory": "delivery",
+            "statusMilestone": "delivered",
+            "originCountryCode": null,
+            "destinationCountryCode": null,
+            "delivery": {
+              "estimatedDeliveryDate": null,
+              "courierEstimatedDeliveryDate": null,
+              "service": null,
+              "signedBy": null
+            },
+            "weight": null,
+            "trackingNumbers": [
+              {
+                "tn": "SHIP24_SAMPLE_DELIVERED_000"
+              }
+            ],
+            "recipient": {
+              "name": null,
+              "address": null,
+              "postCode": null,
+              "city": null,
+              "subdivision": null
+            }
+          },
+          "events": [
+            {
+              "eventId": "REDACTED_FOR_PUBLICATION",
+              "trackingNumber": "SHIP24_SAMPLE_DELIVERED_000",
+              "eventTrackingNumber": "SHIP24_SAMPLE_DELIVERED_000",
+              "status": "Your package has been successfully delivered.",
+              "occurrenceDatetime": "2026-10-01T10:20:06+02:00",
+              "order": null,
+              "datetime": "2026-10-01T10:20:06.000Z",
+              "hasNoTime": false,
+              "utcOffset": "+02:00",
+              "location": "Paris, 75001 (FR)",
+              "sourceCode": "ship24-sample-tracking",
+              "courierCode": null,
+              "statusCode": "delivery_delivered",
+              "statusCategory": "delivery",
+              "statusMilestone": "delivered"
+            },
+            {
+              "eventId": "REDACTED_FOR_PUBLICATION",
+              "trackingNumber": "SHIP24_SAMPLE_DELIVERED_000",
+              "eventTrackingNumber": "SHIP24_SAMPLE_DELIVERED_000",
+              "status": "Our driver is on its way for the delivery.",
+              "occurrenceDatetime": "2026-10-01T10:08:03+02:00",
+              "order": null,
+              "datetime": "2026-10-01T10:08:03.000Z",
+              "hasNoTime": false,
+              "utcOffset": "+02:00",
+              "location": "Paris, 75001 (FR)",
+              "sourceCode": "ship24-sample-tracking",
+              "courierCode": null,
+              "statusCode": "delivery_out_for_delivery",
+              "statusCategory": "delivery",
+              "statusMilestone": "out_for_delivery"
+            },
+            {
+              "eventId": "REDACTED_FOR_PUBLICATION",
+              "trackingNumber": "SHIP24_SAMPLE_DELIVERED_000",
+              "eventTrackingNumber": "SHIP24_SAMPLE_DELIVERED_000",
+              "status": "The package has arrived at our warehouse.",
+              "occurrenceDatetime": "2026-10-01T09:12:02+02:00",
+              "order": null,
+              "datetime": "2026-10-01T09:12:02.000Z",
+              "hasNoTime": false,
+              "utcOffset": "+02:00",
+              "location": "Roissy-en-France, 95700 (FR)",
+              "sourceCode": "ship24-sample-tracking",
+              "courierCode": null,
+              "statusCode": null,
+              "statusCategory": "transit",
+              "statusMilestone": "in_transit"
+            },
+            {
+              "eventId": "REDACTED_FOR_PUBLICATION",
+              "trackingNumber": "SHIP24_SAMPLE_DELIVERED_000",
+              "eventTrackingNumber": "SHIP24_SAMPLE_DELIVERED_000",
+              "status": "Shipper created a label, we have not received the package yet.",
+              "occurrenceDatetime": "2026-10-01T06:30:01+02:00",
+              "order": null,
+              "datetime": "2026-10-01T06:30:01.000Z",
+              "hasNoTime": false,
+              "utcOffset": "+02:00",
+              "location": "Data Center (FR)",
+              "sourceCode": "ship24-sample-tracking",
+              "courierCode": null,
+              "statusCode": "data_order_created",
+              "statusCategory": "data",
+              "statusMilestone": "info_received"
+            }
+          ],
+          "statistics": {
+            "timestamps": {
+              "infoReceivedDatetime": "2026-10-01T06:30:01+02:00",
+              "inTransitDatetime": "2026-10-01T09:12:02+02:00",
+              "outForDeliveryDatetime": "2026-10-01T10:08:03+02:00",
+              "failedAttemptDatetime": null,
+              "availableForPickupDatetime": null,
+              "exceptionDatetime": null,
+              "deliveredDatetime": "2026-10-01T10:20:06+02:00"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "publication_note": "Internal tracker/shipment/event identifiers redacted; all shipment events are official synthetic sample data."
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "provider": "Cathay Cargo CX/UO",
+    "origin": "Hong Kong",
+    "haul_category": "short",
+    "effective_from": "2026-11-01",
+    "effective_through": "2026-11-15",
+    "currency": "HKD",
+    "amount_per_kg": 3.9,
+    "charge": "cargo fuel surcharge only",
+    "source_url": "https://www.cathaycargo.com/en-us/help-and-support/cargo-fuel-surcharge.html",
+    "source_file": "raw/cathay_fuel.html",
+    "base_freight_included": false
+  },
+  {
+    "provider": "Cathay Cargo CX/UO",
+    "origin": "Hong Kong",
+    "haul_category": "medium",
+    "effective_from": "2026-11-01",
+    "effective_through": "2026-11-15",
+    "currency": "HKD",
+    "amount_per_kg": 7.1,
+    "charge": "cargo fuel surcharge only",
+    "source_url": "https://www.cathaycargo.com/en-us/help-and-support/cargo-fuel-surcharge.html",
+    "source_file": "raw/cathay_fuel.html",
+    "base_freight_included": false
+  },
+  {
+    "provider": "Cathay Cargo CX/UO",
+    "origin": "Hong Kong",
+    "haul_category": "long",
+    "effective_from": "2026-11-01",
+    "effective_through": "2026-11-15",
+    "currency": "HKD",
+    "amount_per_kg": 14.1,
+    "charge": "cargo fuel surcharge only",
+    "source_url": "https://www.cathaycargo.com/en-us/help-and-support/cargo-fuel-surcharge.html",
+    "source_file": "raw/cathay_fuel.html",
+    "base_freight_included": false
+  },
+  {
+    "provider": "Cathay Cargo CX/UO",
+    "origin": "Hong Kong",
+    "haul_category": "short",
+    "effective_from": "2026-11-16",
+    "effective_through": "2026-11-30",
+    "currency": "HKD",
+    "amount_per_kg": 3.5,
+    "charge": "cargo fuel surcharge only",
+    "source_url": "https://www.cathaycargo.com/en-us/help-and-support/cargo-fuel-surcharge.html",
+    "source_file": "raw/cathay_fuel.html",
+    "base_freight_included": false
+  },
+  {
+    "provider": "Cathay Cargo CX/UO",
+    "origin": "Hong Kong",
+    "haul_category": "medium",
+    "effective_from": "2026-11-16",
+    "effective_through": "2026-11-30",
+    "currency": "HKD",
+    "amount_per_kg": 6.5,
+    "charge": "cargo fuel surcharge only",
+    "source_url": "https://www.cathaycargo.com/en-us/help-and-support/cargo-fuel-surcharge.html",
+    "source_file": "raw/cathay_fuel.html",
+    "base_freight_included": false
+  },
+  {
+    "provider": "Cathay Cargo CX/UO",
+    "origin": "Hong Kong",
+    "haul_category": "long",
+    "effective_from": "2026-11-16",
+    "effective_through": "2026-11-30",
+    "currency": "HKD",
+    "amount_per_kg": 12.9,
+    "charge": "cargo fuel surcharge only",
+    "source_url": "https://www.cathaycargo.com/en-us/help-and-support/cargo-fuel-surcharge.html",
+    "source_file": "raw/cathay_fuel.html",
+    "base_freight_included": false
+  }
+]

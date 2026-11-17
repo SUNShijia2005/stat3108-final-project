@@ -1,0 +1,30 @@
+{
+  "checked_date": "2026-11-06",
+  "queries": [
+    {
+      "origin": "CNSHA",
+      "destination": "AUMEL",
+      "count": 18
+    },
+    {
+      "origin": "CNSHA",
+      "destination": "BRSSZ",
+      "count": 12
+    },
+    {
+      "origin": "CNSHA",
+      "destination": "TZDAR",
+      "count": 5
+    }
+  ],
+  "dated_sailings": 35,
+  "public_advisory_index_records": 12,
+  "public_port_directory_records": 513,
+  "repeat_live_check": {
+    "checked_at_utc": "2026-11-06T05:56:18.736149+00:00",
+    "melbourne_sailings": 18,
+    "maersk_index_records": 12,
+    "new_article_urls": 0,
+    "note": "Repeated read success is a point-in-time check, not a future uptime guarantee"
+  }
+}

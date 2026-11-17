@@ -1,0 +1,26 @@
+{
+  "checked_at_utc": "2026-11-06T19:16:36.423089+00:00",
+  "downloaded_pdf_count": 8,
+  "pdf_pages": 36,
+  "cargolux_schedule_rows": 438,
+  "cargolux_airport_pairs": 135,
+  "cargolux_airports": 44,
+  "ana_selected_flight_numbers": [
+    "NH8431",
+    "NH8432",
+    "NH8517",
+    "NH8518"
+  ],
+  "ana_dated_flight_samples": 94,
+  "ten_kg_public_rate_samples": 20,
+  "cathay_fuel_rows": 6,
+  "operational_events": 1,
+  "checks": [
+    "all downloaded file checksums",
+    "PDF file signatures",
+    "all Cargolux flight-number rows parsed; merged origin cells inherited",
+    "airport and time formats",
+    "10-zone rate row lengths",
+    "six dated fuel surcharge rows"
+  ]
+}

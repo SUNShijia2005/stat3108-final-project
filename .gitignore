@@ -1,0 +1,10 @@
+/ship24_key.txt
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.DS_Store
+/data/*/raw/
+/data/*/text/
+*.zip

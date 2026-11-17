@@ -1,0 +1,144 @@
+{
+  "checked_date": "2026-11-05",
+  "scope": "Small manually verified source samples; no base ocean freight rates or bookable quotations.",
+  "sources": {
+    "hl_wc2": {
+      "url": "https://www.hapag-lloyd.com/en/services-information/routes-trades/gemini-cogh/route-finder.html/asia/north_america_west/WC2.html",
+      "source_updated_date": "2026-05-11",
+      "carrier": "Hapag-Lloyd",
+      "service": "WC2",
+      "direction": "Eastbound",
+      "frequency": "weekly",
+      "data_type": "published_standard_transit_time_not_voyage_specific",
+      "verification_note": "The primary provider page search-index text contained the table. A direct web open returned a JavaScript application shell. Values are a dated published snapshot, not a successful live schedule query."
+    },
+    "hl_china": {
+      "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/China_local_charges_service_fess__Oct2026v2.pdf",
+      "local_file": "raw/hl_china_local_charges_oct2026.pdf",
+      "carrier": "Hapag-Lloyd",
+      "data_type": "published_local_charge_not_all_in_quote"
+    }
+  },
+  "standard_transit_times": [
+    {
+      "source_id": "hl_wc2",
+      "origin": "Xingang",
+      "destination": "Los Angeles",
+      "days": 29,
+      "arrival_weekday": "WED"
+    },
+    {
+      "source_id": "hl_wc2",
+      "origin": "Xingang",
+      "destination": "Oakland",
+      "days": 37,
+      "arrival_weekday": "THU"
+    },
+    {
+      "source_id": "hl_wc2",
+      "origin": "Qingdao",
+      "destination": "Los Angeles",
+      "days": 25,
+      "arrival_weekday": "WED"
+    },
+    {
+      "source_id": "hl_wc2",
+      "origin": "Qingdao",
+      "destination": "Oakland",
+      "days": 33,
+      "arrival_weekday": "THU"
+    },
+    {
+      "source_id": "hl_wc2",
+      "origin": "Pusan",
+      "destination": "Los Angeles",
+      "days": 20,
+      "arrival_weekday": "WED"
+    },
+    {
+      "source_id": "hl_wc2",
+      "origin": "Pusan",
+      "destination": "Oakland",
+      "days": 28,
+      "arrival_weekday": "THU"
+    },
+    {
+      "source_id": "hl_wc2",
+      "origin": "Yangshan",
+      "origin_note": "Shanghai Yangshan; retain terminal name from source",
+      "destination": "Los Angeles",
+      "days": 16,
+      "arrival_weekday": "WED"
+    },
+    {
+      "source_id": "hl_wc2",
+      "origin": "Yangshan",
+      "origin_note": "Shanghai Yangshan; retain terminal name from source",
+      "destination": "Oakland",
+      "days": 24,
+      "arrival_weekday": "THU"
+    }
+  ],
+  "local_charges": [
+    {
+      "source_id": "hl_china",
+      "source_pages": [
+        1,
+        2
+      ],
+      "direction": "exports",
+      "area": "Shanghai",
+      "description": "Export Service Fee",
+      "code": "ESF",
+      "container_type": "All",
+      "amount": 200,
+      "currency": "CNY",
+      "unit": "per 20-foot container",
+      "effective_date": "2026-10-01",
+      "expiry_date": null,
+      "expiry_text": "Until further notice",
+      "tariff_rule": "RURE-002"
+    },
+    {
+      "source_id": "hl_china",
+      "source_pages": [
+        1,
+        2
+      ],
+      "direction": "exports",
+      "area": "Shanghai",
+      "description": "Export Service Fee",
+      "code": "ESF",
+      "container_type": "All",
+      "amount": 305,
+      "currency": "CNY",
+      "unit": "per 40-foot container",
+      "effective_date": "2026-10-01",
+      "expiry_date": null,
+      "expiry_text": "Until further notice",
+      "tariff_rule": "RURE-002"
+    },
+    {
+      "source_id": "hl_china",
+      "source_pages": [
+        3
+      ],
+      "direction": "exports",
+      "area": "North & Central China",
+      "description": "Document Charge",
+      "code": "MTD",
+      "container_type": "All",
+      "amount": 400,
+      "currency": "CNY",
+      "unit": "per Document",
+      "effective_dates_by_condition": {
+        "eSI": "2013-07-15",
+        "non-eSI": "2019-03-22"
+      },
+      "expiry_date": null,
+      "expiry_text": "Until further notice",
+      "conditions": "eSI and non-eSI (Email/Manual)",
+      "tariff_rule": "L006"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "id": "maersk_rotterdam_rail_20261106",
+    "carrier": "Maersk",
+    "source_url": "https://www.maersk.com.cn/news/articles/2026/11/06/apm-terminals-rotterdam-rail-capacity-adjustment",
+    "source_file": "raw/maersk_rotterdam_rail.html",
+    "published_date": "2026-11-06",
+    "port": "Rotterdam",
+    "terminal": "APM Terminals Maasvlakte II",
+    "transport_mode": "rail",
+    "event_type": "reduced_rail_capacity_timeline_extension",
+    "previous_expected_end": "2027-01",
+    "revised_expected_end": "2027-06",
+    "published_alternative_modes": ["barge", "truck", "alternative rail where operationally feasible"],
+    "impact_condition": "Task includes rail on-carriage through the named terminal during the affected period; exact capacity and shipment availability require confirmation",
+    "does_not_establish": ["an ocean vessel is delayed", "a specific customer container is affected", "truck or barge capacity is guaranteed", "all Rotterdam terminals are affected"],
+    "extraction_review": "manually_checked_against_downloaded_primary_article"
+  },
+  {
+    "id": "maersk_ae18_20261019",
+    "carrier": "Maersk",
+    "source_url": "https://www.maersk.com.cn/news/articles/2026/10/19/gemini-network-service-enhancements-ae18",
+    "source_file": "raw/maersk_ae18.html",
+    "published_date": "2026-10-19",
+    "service": "AE18",
+    "event_type": "new_service_announcement",
+    "first_vessel": "MAERSK EDIRNE",
+    "voyage": "647W",
+    "first_call": "Shanghai",
+    "announced_etd": "2026-11-22",
+    "announced_rotation": ["Shanghai", "Xiamen", "Tanjung Pelepas", "Algeciras", "Tangier", "Algeciras", "Xiamen"],
+    "does_not_establish": ["space available for booking", "the sailing has actually departed", "all voyage dates remain unchanged"],
+    "extraction_review": "manually_checked_against_downloaded_primary_article"
+  }
+]

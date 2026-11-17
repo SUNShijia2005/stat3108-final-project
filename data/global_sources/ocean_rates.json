@@ -1,0 +1,1110 @@
+[
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Japan Main Ports (TYO/NGO/UKB)",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "20 Dry",
+    "amount": 1700,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Japan Main Ports (TYO/NGO/UKB)",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 Dry",
+    "amount": 2000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Japan Main Ports (TYO/NGO/UKB)",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 HC Dry",
+    "amount": 2000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Japan Main Ports (TYO/NGO/UKB)",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "20 Reefer",
+    "amount": 2000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Japan Main Ports (TYO/NGO/UKB)",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 HC Reefer",
+    "amount": 3000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Far East Main Ports",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "20 Dry",
+    "amount": 1500,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Far East Main Ports",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 Dry",
+    "amount": 1800,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Far East Main Ports",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 HC Dry",
+    "amount": 1800,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Far East Main Ports",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "20 Reefer",
+    "amount": 1800,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Far East Main Ports",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 HC Reefer",
+    "amount": 2500,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "ISC/Middle East",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "20 Dry",
+    "amount": 2000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "ISC/Middle East",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 Dry",
+    "amount": 2500,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "ISC/Middle East",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 HC Dry",
+    "amount": 2500,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "ISC/Middle East",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "20 Reefer",
+    "amount": 3000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "ISC/Middle East",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 HC Reefer",
+    "amount": 3500,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Oceania",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "20 Dry",
+    "amount": 5000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Oceania",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 Dry",
+    "amount": 6000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Oceania",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 HC Dry",
+    "amount": 6000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Oceania",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "20 Reefer",
+    "amount": 6000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "one_europe_asia_fak",
+    "source_page": 1,
+    "carrier": "ONE",
+    "origin_scope": "NEU/WEST MED Main Ports",
+    "destination_scope": "Oceania",
+    "scope_granularity": "region_or_named_main_port_group_not_all_country_ports",
+    "equipment": "40 HC Reefer",
+    "amount": 7000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_basic_ocean_tariff",
+    "terms": "CY/CY",
+    "effective_date": "2026-01-01",
+    "expiry_date": null,
+    "expiry_text": "Until Further Notice",
+    "includes": [
+      "basic ocean freight"
+    ],
+    "excluded_or_additional": [
+      "OBS",
+      "EES",
+      "security charges if applicable",
+      "THC",
+      "PSS if applicable",
+      "other ocean/local/contingency charges",
+      "outport additions if applicable"
+    ],
+    "commodity_scope": "See original tariff restrictions; reefer rates limited to frozen foodstuffs between -5C and -25C",
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_asia_med_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "All Asian main ports",
+    "destination_scope": "WEST MED",
+    "scope_granularity": "region_main_ports_requires_port_mapping",
+    "equipment": "20",
+    "cargo_scope": [
+      "Dry",
+      "Reefer",
+      "OOG",
+      "Paying Empties"
+    ],
+    "amount": 3900,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": "2026-11-14",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges",
+      "ETS",
+      "LSS"
+    ],
+    "excluded_or_additional": [
+      "origin THC",
+      "destination THC",
+      "safety and security surcharges",
+      "contingency and local charges if applicable"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_asia_med_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "All Asian main ports",
+    "destination_scope": "WEST MED",
+    "scope_granularity": "region_main_ports_requires_port_mapping",
+    "equipment": "40/40 HC",
+    "cargo_scope": [
+      "Dry",
+      "Reefer",
+      "OOG",
+      "Paying Empties"
+    ],
+    "amount": 4900,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": "2026-11-14",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges",
+      "ETS",
+      "LSS"
+    ],
+    "excluded_or_additional": [
+      "origin THC",
+      "destination THC",
+      "safety and security surcharges",
+      "contingency and local charges if applicable"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_asia_med_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "All Asian main ports",
+    "destination_scope": "ADRIATIC",
+    "scope_granularity": "region_main_ports_requires_port_mapping",
+    "equipment": "20",
+    "cargo_scope": [
+      "Dry",
+      "Reefer",
+      "OOG",
+      "Paying Empties"
+    ],
+    "amount": 4000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": "2026-11-14",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges",
+      "ETS",
+      "LSS"
+    ],
+    "excluded_or_additional": [
+      "origin THC",
+      "destination THC",
+      "safety and security surcharges",
+      "contingency and local charges if applicable"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_asia_med_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "All Asian main ports",
+    "destination_scope": "ADRIATIC",
+    "scope_granularity": "region_main_ports_requires_port_mapping",
+    "equipment": "40/40 HC",
+    "cargo_scope": [
+      "Dry",
+      "Reefer",
+      "OOG",
+      "Paying Empties"
+    ],
+    "amount": 5000,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": "2026-11-14",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges",
+      "ETS",
+      "LSS"
+    ],
+    "excluded_or_additional": [
+      "origin THC",
+      "destination THC",
+      "safety and security surcharges",
+      "contingency and local charges if applicable"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_asia_med_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "All Asian main ports",
+    "destination_scope": "EAST MED",
+    "scope_granularity": "region_main_ports_requires_port_mapping",
+    "equipment": "20",
+    "cargo_scope": [
+      "Dry",
+      "Reefer",
+      "OOG",
+      "Paying Empties"
+    ],
+    "amount": 4200,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": "2026-11-14",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges",
+      "ETS",
+      "LSS"
+    ],
+    "excluded_or_additional": [
+      "origin THC",
+      "destination THC",
+      "safety and security surcharges",
+      "contingency and local charges if applicable"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_asia_med_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "All Asian main ports",
+    "destination_scope": "EAST MED",
+    "scope_granularity": "region_main_ports_requires_port_mapping",
+    "equipment": "40/40 HC",
+    "cargo_scope": [
+      "Dry",
+      "Reefer",
+      "OOG",
+      "Paying Empties"
+    ],
+    "amount": 5200,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": "2026-11-14",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges",
+      "ETS",
+      "LSS"
+    ],
+    "excluded_or_additional": [
+      "origin THC",
+      "destination THC",
+      "safety and security surcharges",
+      "contingency and local charges if applicable"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_asia_med_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "All Asian main ports",
+    "destination_scope": "BLACK SEA",
+    "scope_granularity": "region_main_ports_requires_port_mapping",
+    "equipment": "20",
+    "cargo_scope": [
+      "Dry",
+      "Reefer",
+      "OOG",
+      "Paying Empties"
+    ],
+    "amount": 4200,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": "2026-11-14",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges",
+      "ETS",
+      "LSS"
+    ],
+    "excluded_or_additional": [
+      "origin THC",
+      "destination THC",
+      "safety and security surcharges",
+      "contingency and local charges if applicable"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_asia_med_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "All Asian main ports",
+    "destination_scope": "BLACK SEA",
+    "scope_granularity": "region_main_ports_requires_port_mapping",
+    "equipment": "40/40 HC",
+    "cargo_scope": [
+      "Dry",
+      "Reefer",
+      "OOG",
+      "Paying Empties"
+    ],
+    "amount": 5200,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": "2026-11-14",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges",
+      "ETS",
+      "LSS"
+    ],
+    "excluded_or_additional": [
+      "origin THC",
+      "destination THC",
+      "safety and security surcharges",
+      "contingency and local charges if applicable"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_asia_med_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "All Asian main ports",
+    "destination_scope": "NORTH AFRICA",
+    "scope_granularity": "region_main_ports_requires_port_mapping",
+    "equipment": "20",
+    "cargo_scope": [
+      "Dry",
+      "Reefer",
+      "OOG",
+      "Paying Empties"
+    ],
+    "amount": 5300,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": "2026-11-14",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges",
+      "ETS",
+      "LSS"
+    ],
+    "excluded_or_additional": [
+      "origin THC",
+      "destination THC",
+      "safety and security surcharges",
+      "contingency and local charges if applicable"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_asia_med_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "All Asian main ports",
+    "destination_scope": "NORTH AFRICA",
+    "scope_granularity": "region_main_ports_requires_port_mapping",
+    "equipment": "40/40 HC",
+    "cargo_scope": [
+      "Dry",
+      "Reefer",
+      "OOG",
+      "Paying Empties"
+    ],
+    "amount": 7100,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": "2026-11-14",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges",
+      "ETS",
+      "LSS"
+    ],
+    "excluded_or_additional": [
+      "origin THC",
+      "destination THC",
+      "safety and security surcharges",
+      "contingency and local charges if applicable"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_europe_india_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "North Europe main ports",
+    "destination_scope": "Mundra, India",
+    "scope_granularity": "named_base_port_example",
+    "equipment": "20",
+    "cargo_scope": [
+      "Dry",
+      "Paying Empties"
+    ],
+    "amount": 975,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": null,
+    "expiry_text": "Not specified in accessed announcement; check for superseding notices",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges"
+    ],
+    "excluded_or_additional": [
+      "destination THC",
+      "peak season and similar charges",
+      "safety and security surcharges",
+      "contingency and local charges if applicable",
+      "outport additions"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_europe_india_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "North Europe main ports",
+    "destination_scope": "Mundra, India",
+    "scope_granularity": "named_base_port_example",
+    "equipment": "40/40 HC",
+    "cargo_scope": [
+      "Dry",
+      "Paying Empties"
+    ],
+    "amount": 900,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": null,
+    "expiry_text": "Not specified in accessed announcement; check for superseding notices",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges"
+    ],
+    "excluded_or_additional": [
+      "destination THC",
+      "peak season and similar charges",
+      "safety and security surcharges",
+      "contingency and local charges if applicable",
+      "outport additions"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_europe_india_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "North Europe main ports",
+    "destination_scope": "Karachi, Pakistan",
+    "scope_granularity": "named_base_port_example",
+    "equipment": "20",
+    "cargo_scope": [
+      "Dry",
+      "Paying Empties"
+    ],
+    "amount": 1100,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": null,
+    "expiry_text": "Not specified in accessed announcement; check for superseding notices",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges"
+    ],
+    "excluded_or_additional": [
+      "destination THC",
+      "peak season and similar charges",
+      "safety and security surcharges",
+      "contingency and local charges if applicable",
+      "outport additions"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  },
+  {
+    "source_id": "cma_europe_india_nov01",
+    "carrier": "CMA CGM",
+    "origin_scope": "North Europe main ports",
+    "destination_scope": "Karachi, Pakistan",
+    "scope_granularity": "named_base_port_example",
+    "equipment": "40/40 HC",
+    "cargo_scope": [
+      "Dry",
+      "Paying Empties"
+    ],
+    "amount": 1100,
+    "currency": "USD",
+    "unit": "per container",
+    "rate_type": "published_fak_announcement",
+    "effective_date": "2026-11-01",
+    "expiry_date": null,
+    "expiry_text": "Not specified in accessed announcement; check for superseding notices",
+    "includes": [
+      "basic freight",
+      "bunker-related surcharges"
+    ],
+    "excluded_or_additional": [
+      "destination THC",
+      "peak season and similar charges",
+      "safety and security surcharges",
+      "contingency and local charges if applicable",
+      "outport additions"
+    ],
+    "availability_confirmed": false,
+    "supersession_checked": false
+  }
+]

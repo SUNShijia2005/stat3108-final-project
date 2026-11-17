@@ -1,0 +1,188 @@
+[
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/Singapore_local_charges_service_fees_Aug2026.pdf",
+    "ref": "turn15view0",
+    "pages": "2",
+    "id": "hl_singapore",
+    "kind": "local_charges",
+    "country_or_area": "singapore",
+    "file": "raw/hl_singapore.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/pdf/Vietnam_local_charges_service_fees_Aug2026.pdf",
+    "ref": "turn15view1",
+    "pages": "2",
+    "id": "hl_vietnam",
+    "kind": "local_charges",
+    "country_or_area": "vietnam",
+    "file": "raw/hl_vietnam.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/Malaysia_local_charges_service_fees_Aug_2026.pdf",
+    "ref": "turn15view2",
+    "pages": "2",
+    "id": "hl_malaysia",
+    "kind": "local_charges",
+    "country_or_area": "malaysia",
+    "file": "raw/hl_malaysia.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/pdf/Thailand_local_charges_service_fees_Aug2026.pdf",
+    "ref": "turn15view3",
+    "pages": "2",
+    "id": "hl_thailand",
+    "kind": "local_charges",
+    "country_or_area": "thailand",
+    "file": "raw/hl_thailand.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/Australia_local_charges_service_fees__Aug2026v2.pdf",
+    "ref": "turn18view0",
+    "pages": "2",
+    "id": "hl_australia",
+    "kind": "local_charges",
+    "country_or_area": "australia",
+    "file": "raw/hl_australia.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/New_Zealand_local_charges_service_fees_Aug2026.pdf",
+    "ref": "turn18view1",
+    "pages": "2",
+    "id": "hl_new_zealand",
+    "kind": "local_charges",
+    "country_or_area": "new_zealand",
+    "file": "raw/hl_new_zealand.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/Japan_local_charges_service_fees_Aug_2026.pdf",
+    "ref": "turn18view2",
+    "pages": "2",
+    "id": "hl_japan",
+    "kind": "local_charges",
+    "country_or_area": "japan",
+    "file": "raw/hl_japan.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/South_Korea_local_charges_service_fees_Aug2026.pdf",
+    "ref": "turn18view3",
+    "pages": "2",
+    "id": "hl_south_korea",
+    "kind": "local_charges",
+    "country_or_area": "south_korea",
+    "file": "raw/hl_south_korea.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/pdf/Germany_Local_Charges_Service_Fees_03_11_2026.pdf",
+    "ref": "turn16view0",
+    "pages": "2",
+    "id": "hl_germany",
+    "kind": "local_charges",
+    "country_or_area": "germany",
+    "file": "raw/hl_germany.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/pdf/Benelux_Local_Charges_Service_Fees_29_10_2026.pdf",
+    "ref": "turn16view1",
+    "pages": "3",
+    "id": "hl_benelux",
+    "kind": "local_charges",
+    "country_or_area": "benelux",
+    "file": "raw/hl_benelux.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/pdf/France_Local_Charges_Service_Fees_03_11_2026.pdf",
+    "ref": "turn16view2",
+    "pages": "2",
+    "id": "hl_france",
+    "kind": "local_charges",
+    "country_or_area": "france",
+    "file": "raw/hl_france.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/pdf/UAE_Local_Q4_2026.pdf",
+    "ref": "turn16view3",
+    "pages": "1",
+    "id": "hl_uae",
+    "kind": "local_charges",
+    "country_or_area": "uae",
+    "file": "raw/hl_uae.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/pdf/IN_EXPORT_LOCAL_Q4_2026.pdf",
+    "ref": "turn17view0",
+    "pages": "1",
+    "id": "hl_india_export",
+    "kind": "local_charges",
+    "country_or_area": "india_export",
+    "file": "raw/hl_india_export.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/Local_Charges_Service_Fees_Canada_10012026.pdf",
+    "ref": "turn17view1",
+    "pages": "10",
+    "id": "hl_canada",
+    "kind": "local_charges",
+    "country_or_area": "canada",
+    "file": "raw/hl_canada.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/pdf/TG_Local_Q4_2026.pdf",
+    "ref": "turn17view2",
+    "pages": "1",
+    "id": "hl_togo",
+    "kind": "local_charges",
+    "country_or_area": "togo",
+    "file": "raw/hl_togo.pdf"
+  },
+  {
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/LBR_Local_Charges_Template_as_from_08312026.pdf",
+    "ref": "turn17view3",
+    "pages": "2",
+    "id": "hl_brazil",
+    "kind": "local_charges",
+    "country_or_area": "brazil",
+    "file": "raw/hl_brazil.pdf"
+  },
+  {
+    "id": "hl_indonesia",
+    "kind": "local_charges",
+    "country_or_area": "indonesia",
+    "file": "raw/hl_indonesia.pdf",
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/Indonesia_local_charges_service_fees_May2026.pdf"
+  },
+  {
+    "id": "hl_great_britain",
+    "kind": "local_charges",
+    "country_or_area": "great_britain",
+    "file": "raw/hl_great_britain.pdf",
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/pdf/Great_Britain_Local_Charges_Service_Fees_16_09_2026.pdf"
+  },
+  {
+    "id": "hl_south_africa",
+    "kind": "local_charges",
+    "country_or_area": "south_africa",
+    "file": "raw/hl_south_africa.pdf",
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/pdf/ZA_MAS_LOCAL_Q42026.pdf"
+  },
+  {
+    "id": "hl_tanzania",
+    "kind": "local_charges",
+    "country_or_area": "tanzania",
+    "file": "raw/hl_tanzania.pdf",
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/TZ_Lo.pdf"
+  },
+  {
+    "id": "cma_fal1",
+    "kind": "service_guide",
+    "country_or_area": "asia_europe",
+    "file": "raw/cma_fal1_apr2026.pdf",
+    "url": "https://www.cma-cgm.com/assets/public/documents/FAL%201_10.pdf"
+  },
+  {
+    "id": "msc_asia_north_europe",
+    "kind": "service_guide",
+    "country_or_area": "asia_europe",
+    "file": "raw/msc_asia_north_europe_2026.pdf",
+    "url": "https://www.msc.com/-/media/files/msc-cargo/msc-solutions/trades/east-west-network/via-cape-asia-north-europe-network-2026.pdf?rev=6c1fd7c0a72f478abf9978f745183c87"
+  }
+]

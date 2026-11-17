@@ -1,0 +1,30 @@
+[
+  {
+    "provider": "Cathay Cargo",
+    "title": "Temporary acceptance measures for Bangkok (BKK) bound cargo",
+    "published_date_from_home": "2026-11-06",
+    "affected_destination": "BKK",
+    "effective_from": "2026-11-07",
+    "effective_through": "2026-11-15",
+    "reason": "Cargo-terminal congestion, workforce and capacity constraints; import-processing delays",
+    "acceptance_condition": "Only BUP/intact ULD shipments releasable without breakdown at BKK during the stated window",
+    "exceptions": [
+      "COL",
+      "CRT",
+      "FRO",
+      "PIL",
+      "ACT",
+      "AVI",
+      "HUM"
+    ],
+    "source_url": "https://www.cathaycargo.com/en-us/news/temporary-acceptance-measures-for-bangkok-bkk-bound-cargo.html",
+    "source_file": "raw/cathay_bkk_notice.html",
+    "impact_rule": "Match Cathay shipments bound for BKK within the effective period; inspect cargo type and ULD conditions before flagging.",
+    "does_not_establish": [
+      "all airlines affected",
+      "all cargo prohibited",
+      "confirmed delay of an individual shipment"
+    ],
+    "body_text": "Due to peak-season congestion, workforce and capacity constraints at the Bangkok (BKK) cargo terminal, import cargo processing is currently experiencing delays. From 7 to 15 November 2026 inclusive , Cathay Cargo will temporarily accept only BUP/intact ULD shipments that can be released without breakdown at BKK , helping to reduce the import backlog and improve cargo flow. Temperature-controlled and special cargo under COL, CRT, FRO, PIL, ACT, AVI and HUM are exempt from the above. We apologise for the inconvenience and appreciate our customers’ understanding and cooperation while we work with our terminal operator to restore normal service. For assistance, please contact your local Cathay Cargo representative."
+  }
+]

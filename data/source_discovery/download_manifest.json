@@ -1,0 +1,24 @@
+[
+  {
+    "file": "raw/hl_china_local_charges_oct2026.pdf",
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/China_local_charges_service_fess__Oct2026v2.pdf",
+    "status": "downloaded",
+    "bytes": 173491,
+    "sha256": "72ed6de8c7d4c670dd0ac3149f7548ea7e9bf3261a16605db2431a3f84509513",
+    "retrieved_date": "2026-11-05"
+  },
+  {
+    "file": "raw/hl_usa_local_charges_oct2026.pdf",
+    "url": "https://www.hapag-lloyd.com/content/dam/website/downloads/detention_demurrage/USA_Local_Charges_Effective_10012026.pdf",
+    "status": "downloaded",
+    "bytes": 331796,
+    "sha256": "e0af7f6f8fef0b7d67266fcf1d0ee9224069a0edb6823b8cf584b23ce4d97c9f",
+    "retrieved_date": "2026-11-05"
+  },
+  {
+    "file": "raw/oocl_sc1_route_undated.pdf",
+    "url": "https://www.oocl.com/eng/ourservices/serviceroutes/Documents/TPT/TPT_SC1.pdf",
+    "status": "failed",
+    "error": "HTTP Error 403: Forbidden"
+  }
+]
