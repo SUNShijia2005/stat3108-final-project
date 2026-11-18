@@ -27,7 +27,7 @@ def shipment(**changes):
 def documents(**changes):
     return {**shipment(), 'sender_name':'Demo Sender','sender_address':'Example only','sender_phone':'000000',
             'recipient_name':'Demo Recipient','recipient_address':'Example only','recipient_phone':'000000',
-            'currency':'USD','country_of_origin':'CN','invoice_total':50,
+            'currency':'USD','country_of_origin':'CN','invoice_total':50,'invoice_number':'TEST-001','ship_date':'2026-11-17',
             'items':[{'description':'Cotton T-shirt','quantity':2,'packing_quantity':2,'unit_price':25}],**changes}
 
 
@@ -167,7 +167,7 @@ class ModelContractTests(unittest.TestCase):
             def open(self,req,timeout):
                 requests.append(json.loads(req.data))
                 return io.BytesIO(json.dumps({'status':'completed','output':[{'type':'message','content':[{'type':'output_text','text':'Reference answer.'}]}]}).encode())
-        with patch.dict(os.environ,{'LLM_API_KEY':'test-only','LLM_MODEL':'test-model','LLM_BASE_URL':'https://example.invalid/v1'}),patch('parcel.model.build_opener',return_value=Opener()):
+        with patch.dict(os.environ,{'LLM_API_KEY':'test-only','LLM_MODEL':'test-model','LLM_BASE_URL':'https://example.invalid/v1','LLM_API_STYLE':'responses'}),patch('parcel.model.build_opener',return_value=Opener()):
             for mode in ['baseline','rag']:
                 model.respond('question',{'fields':{},'messages':[]},lambda *args:self.fail('No tools expected'),mode=mode,context=[{'id':'weight','text':'5000'}] if mode=='rag' else None)
         self.assertEqual(requests[0]['tools'],[]);self.assertEqual(requests[1]['tools'],[])
@@ -178,7 +178,7 @@ class ModelContractTests(unittest.TestCase):
         requests=[];calls=[]
         class Opener:
             def open(self,req,timeout):requests.append(json.loads(req.data));return io.BytesIO(json.dumps(responses.pop(0)).encode())
-        with patch.dict(os.environ,{'LLM_API_KEY':'test-only','LLM_MODEL':'test-model','LLM_BASE_URL':'https://example.invalid/v1'}),patch('parcel.model.build_opener',return_value=Opener()):
+        with patch.dict(os.environ,{'LLM_API_KEY':'test-only','LLM_MODEL':'test-model','LLM_BASE_URL':'https://example.invalid/v1','LLM_API_STYLE':'responses'}),patch('parcel.model.build_opener',return_value=Opener()):
             text=model.respond('estimate',{'fields':{},'messages':[]},lambda name,args:calls.append((name,args)) or {'status':'needs_input'})
         self.assertEqual(calls,[('estimate_rates',{})]);self.assertEqual(text,'Saved reference estimate.')
         self.assertEqual(requests[1]['input'][-1]['type'],'function_call_output');self.assertFalse(requests[0]['store'])
