@@ -17,14 +17,15 @@ class Store:
         conn.execute("PRAGMA journal_mode=WAL")
         return conn
 
-    def create(self):
-        task={"id":uuid.uuid4().hex,"version":0,"fields":{},"messages":[],"quote":None,"checks":None,"tracking":None}
+    def create(self, demo=False):
+        task={"id":uuid.uuid4().hex,"version":0,"fields":{},"messages":[],"quote":None,"checks":None,"tracking":None,"selected_service":None,"is_demo":bool(demo)}
         self.save(task); return task
 
     def get(self,task_id):
         with self.connect() as conn: row=conn.execute("SELECT body FROM tasks WHERE id=?",(task_id,)).fetchone()
         if not row: raise KeyError("运输任务不存在。")
-        return json.loads(row[0])
+        task=json.loads(row[0]);task.setdefault('selected_service',None);task.setdefault('is_demo',False)
+        return task
 
     def save(self,task):
         task["updated_at"]=datetime.now(timezone.utc).isoformat()
@@ -33,4 +34,6 @@ class Store:
 
     def list(self):
         with self.connect() as conn: rows=conn.execute("SELECT body FROM tasks ORDER BY updated DESC LIMIT 30").fetchall()
-        return [{"id":t["id"],"updated_at":t["updated_at"],"version":t["version"],"goods":t["fields"].get("goods"),"city":t["fields"].get("destination_city")} for t in (json.loads(row[0]) for row in rows)]
+        return [{"id":t["id"],"updated_at":t["updated_at"],"version":t["version"],"goods":t["fields"].get("goods"),"city":t["fields"].get("destination_city"),
+                 "origin":t["fields"].get("origin_province"),"destination_zip":t["fields"].get("destination_zip"),"weight_kg":t["fields"].get("weight_kg"),
+                 "selected_service":(t.get("selected_service") or {}).get("service"),"is_demo":t.get("is_demo",False)} for t in (json.loads(row[0]) for row in rows)]
