@@ -1,0 +1,74 @@
+{
+  "checked_at": "2026-11-17T22:02:29.184669+00:00",
+  "method": "Manual browser interaction against local app; these cases are separate from component test counts.",
+  "live_model_calls": 0,
+  "live_ship24_calls": 0,
+  "cases": [
+    {
+      "case": "Scenario compares 8kg while preserving saved 10kg request, quote and chosen IE service",
+      "result": "pass"
+    },
+    {
+      "case": "Explicit weight edits save the new value and invalidate outdated service selection",
+      "result": "pass"
+    },
+    {
+      "case": "Unsaved document sender survives cached tracking lookup and page navigation",
+      "result": "pass"
+    },
+    {
+      "case": "Unsaved document sender survives reload and switching to a different task and back",
+      "result": "pass"
+    },
+    {
+      "case": "Invoice and packing quantity mismatch points to the actual item row; correction passes",
+      "result": "pass"
+    },
+    {
+      "case": "Choose IE then check documents then view completed preparation checklist",
+      "result": "pass"
+    },
+    {
+      "case": "Request to track a supplied number never substitutes the official example",
+      "result": "pass"
+    },
+    {
+      "case": "Two-window stale save preserves local 12kg draft, displays newer saved 8kg, and prevents overwrite",
+      "result": "pass"
+    },
+    {
+      "case": "Invoice inline preview renders actual item, contact, date and amount content",
+      "result": "pass"
+    },
+    {
+      "case": "Checklist inline preview renders selected IE, current 10kg and pending verification items",
+      "result": "pass"
+    },
+    {
+      "case": "Conversation composer and send button visible with no page overflow at 1280x800 and 390x844",
+      "result": "pass"
+    },
+    {
+      "case": "Rates page has no page-level horizontal overflow at 390x844",
+      "result": "pass"
+    },
+    {
+      "case": "Latest assistant response starts at its text instead of hiding it above source disclosures",
+      "result": "pass"
+    }
+  ],
+  "console_warnings_or_errors": [],
+  "component_tests": {
+    "python": {
+      "passed": 105,
+      "total": 105
+    },
+    "javascript_draft_cases": {
+      "passed": 17,
+      "total": 17
+    }
+  },
+  "limitations": [
+    "Local rule mode exercised; live model experiment and real shipment lookup were not performed in this check."
+  ]
+}

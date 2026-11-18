@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-11-18T00:40:29.759846+00:00",
+  "configured_model": "gemini-3.1-flash-lite",
+  "configured_api_style": "chat_completions",
+  "service_enabled": true,
+  "live_conversation_verified": true,
+  "observed_failures": [
+    "Two browser chat attempts returned HTTP503 after service activation.",
+    "Alternative free-model adapter request timed out.",
+    "Native Gemini endpoint request also timed out."
+  ],
+  "secret_values_recorded": false,
+  "fix": "Catch Python3.9 socket.timeouts as model errors and provide an actionable HTTP503 hint.",
+  "offline_python_tests": {
+    "passed": 144,
+    "total": 144
+  },
+  "latest_result": {
+    "mode": "model",
+    "model_error": null,
+    "case": "One-sentence explanation of rainbow colours through /api/chat",
+    "saved_shipment_weight_kg": 10,
+    "screenshot": "gemini-connected.jpg"
+  },
+  "diagnosis": "The previous gemini-3.8-flash endpoint returned HTTP503 with an explicit high-demand message. gemini-3.1-flash-lite succeeded on the same key and endpoint."
+}

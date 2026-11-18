@@ -1,10 +1,30 @@
 {
   "status": "passed",
-  "generated_at": "2026-11-17T10:43:42.492064+00:00",
+  "generated_at": "2026-11-18T00:33:38.837657+00:00",
   "scope": "Offline component and HTTP tests. Optional model transport is mocked; no live LLM, real shipment or end-user study.",
-  "total": 53,
-  "passed": 53,
+  "total": 144,
+  "passed": 144,
   "categories": {
+    "ConversationCorrectnessTests": {
+      "passed": 34,
+      "total": 34
+    },
+    "ConversationExperienceTests": {
+      "passed": 10,
+      "total": 10
+    },
+    "ModelConversationTests": {
+      "passed": 16,
+      "total": 16
+    },
+    "ModelSettingsHTTPTests": {
+      "passed": 3,
+      "total": 3
+    },
+    "ModelSettingsTests": {
+      "passed": 10,
+      "total": 10
+    },
     "DocumentTests": {
       "passed": 11,
       "total": 11
@@ -24,9 +44,382 @@
     "WorkflowTests": {
       "passed": 9,
       "total": 9
+    },
+    "PreparationFlowTests": {
+      "passed": 15,
+      "total": 15
+    },
+    "PreparationHTTPTests": {
+      "passed": 3,
+      "total": 3
     }
   },
   "cases": [
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_affirmative_update_invalidates_selected_service",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_bare_number_is_not_a_new_saved_weight",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_budget_old_and_new_use_new_value",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_budget_question_without_punctuation_does_not_update",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_city_change_clears_stale_zip",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_english_hypothetical",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_english_negative_change",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_explicit_demo_request_reads_cached_sample",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_explicit_document_check_still_executes",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_explicit_initial_request_is_recorded",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_explicit_new_zip_is_preserved",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_failed_model_round_is_rolled_back_before_fallback",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_full_form_patch_with_old_zip_is_cleared",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_generic_tracking_never_queries_demo",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_hypothetical_and_explicit_do_not_modify",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_hypothetical_demo_does_not_replace_tracking",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_invalid_update_has_no_partial_side_effects",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_logistics_cost_question_is_not_tracking",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_missing_dimensions_followup_is_supported",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_missing_zip_followup_is_supported",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_model_cannot_add_an_unrequested_update",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_model_cannot_execute_negated_document_check",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_model_cannot_update_fields_for_a_question",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_negated_demo_request_is_not_executed",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_negated_document_check_preserves_results",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_negative_change_is_not_executed",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_old_and_new_weight_use_new_value",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_origin_comparison_does_not_overwrite_origin",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_other_negative_phrasings_preserve_saved_fields",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_please_do_not_modify_is_readonly",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_price_question_does_not_change_weight",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_question_with_weight_does_not_modify",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_real_tracking_number_does_not_trigger_example",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_chat_correctness.ConversationCorrectnessTests.test_unknown_unit_is_not_silently_centimeters",
+      "category": "ConversationCorrectnessTests",
+      "passed": true
+    },
+    {
+      "id": "test_conversation_experience.ConversationExperienceTests.test_model_failure_does_not_claim_successful_ai_answer",
+      "category": "ConversationExperienceTests",
+      "passed": true
+    },
+    {
+      "id": "test_conversation_experience.ConversationExperienceTests.test_model_handles_open_conversation_directly",
+      "category": "ConversationExperienceTests",
+      "passed": true
+    },
+    {
+      "id": "test_conversation_experience.ConversationExperienceTests.test_nonshipping_price_question_does_not_force_shipping_tool",
+      "category": "ConversationExperienceTests",
+      "passed": true
+    },
+    {
+      "id": "test_conversation_experience.ConversationExperienceTests.test_offline_greeting_is_a_greeting_without_feature_menu",
+      "category": "ConversationExperienceTests",
+      "passed": true
+    },
+    {
+      "id": "test_conversation_experience.ConversationExperienceTests.test_offline_thanks_does_not_redirect_to_parcel_form",
+      "category": "ConversationExperienceTests",
+      "passed": true
+    },
+    {
+      "id": "test_conversation_experience.ConversationExperienceTests.test_open_question_reports_missing_model_without_irrelevant_retrieval",
+      "category": "ConversationExperienceTests",
+      "passed": true
+    },
+    {
+      "id": "test_conversation_experience.ConversationExperienceTests.test_saved_task_recall_uses_actual_fields",
+      "category": "ConversationExperienceTests",
+      "passed": true
+    },
+    {
+      "id": "test_conversation_experience.ConversationExperienceTests.test_scenario_reaches_model_with_grounded_temporary_result",
+      "category": "ConversationExperienceTests",
+      "passed": true
+    },
+    {
+      "id": "test_conversation_experience.ConversationExperienceTests.test_tracking_question_also_reaches_model_without_substituting_demo",
+      "category": "ConversationExperienceTests",
+      "passed": true
+    },
+    {
+      "id": "test_conversation_experience.ConversationExperienceTests.test_unrelated_city_and_weight_declarations_never_become_shipping_edits",
+      "category": "ConversationExperienceTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_auth_and_quota_errors_are_actionable_without_echoing_provider_body",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_baseline_does_not_execute_an_unexpected_model_tool_request",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_blank_configuration_is_not_a_connected_model",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_chat_completions_direct_reply_uses_compatible_request_shape",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_chat_completions_tool_call_roundtrip",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_followup_context_is_retained_beyond_the_old_eight_message_limit",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_general_question_can_return_a_direct_answer_without_a_tool",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_general_scope_omits_saved_state_without_losing_dialogue",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_history_budget_ignores_injected_roles_and_bounds_long_messages",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_incomplete_answers_are_not_treated_as_success",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_invalid_protocol_or_non_https_endpoint_never_sends_request",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_network_failures_are_reported_as_model_connection_failures",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_precomputed_scenario_is_available_without_copying_private_draft_fields",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_responses_preserves_reasoning_and_function_output_between_rounds",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_saved_context_omits_contact_address_and_item_records",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_conversation.ModelConversationTests.test_socket_timeouts_return_an_actionable_model_error",
+      "category": "ModelConversationTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsHTTPTests.test_configure_without_task_id_updates_health_and_hides_key",
+      "category": "ModelSettingsHTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsHTTPTests.test_cross_origin_cannot_save_settings",
+      "category": "ModelSettingsHTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsHTTPTests.test_missing_key_returns_actionable_error_without_configuration",
+      "category": "ModelSettingsHTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsTests.test_blank_key_can_retain_same_provider_and_change_model",
+      "category": "ModelSettingsTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsTests.test_changed_endpoint_never_reuses_existing_key",
+      "category": "ModelSettingsTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsTests.test_empty_settings_reveal_only_missing_configuration",
+      "category": "ModelSettingsTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsTests.test_existing_unrelated_settings_and_explicit_environment_are_preserved",
+      "category": "ModelSettingsTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsTests.test_first_configuration_requires_a_key",
+      "category": "ModelSettingsTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsTests.test_invalid_payloads_and_environment_line_injection_are_rejected",
+      "category": "ModelSettingsTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsTests.test_invalid_urls_are_rejected_before_any_write",
+      "category": "ModelSettingsTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsTests.test_new_key_allows_explicit_custom_provider_and_chat_format",
+      "category": "ModelSettingsTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsTests.test_saved_configuration_is_private_immediate_and_reloadable",
+      "category": "ModelSettingsTests",
+      "passed": true
+    },
+    {
+      "id": "test_model_settings.ModelSettingsTests.test_write_failure_does_not_activate_unsaved_settings",
+      "category": "ModelSettingsTests",
+      "passed": true
+    },
     {
       "id": "test_project.DocumentTests.test_01_valid_draft",
       "category": "DocumentTests",
@@ -290,6 +683,96 @@
     {
       "id": "test_project.WorkflowTests.test_09_document_edit_preserves_rate",
       "category": "WorkflowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_cent_precision_does_not_export_inconsistent_math",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_csv_missing_other_document_stays_missing",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_csv_rejects_ambiguous_structure",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_document_issues_locate_fields_and_rows",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_history_keeps_human_readable_metadata",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_item_shape_and_nonfinite_values_rejected_before_save",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_known_city_state_zip_consistency",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_missing_invoice_reference_or_date_prevents_ready_summary",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_old_selection_not_ready_when_quote_changes",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_preparation_progress_follows_required_steps",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_selection_requires_current_estimate",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_selection_uses_server_price",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_summary_contains_chosen_reference_and_pending",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_summary_escapes_customer_text",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationFlowTests.test_zero_value_requires_correction",
+      "category": "PreparationFlowTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationHTTPTests.test_full_preparation_api_flow_and_summary",
+      "category": "PreparationHTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationHTTPTests.test_only_printable_endpoints_allow_same_origin_frames",
+      "category": "PreparationHTTPTests",
+      "passed": true
+    },
+    {
+      "id": "test_task_flow.PreparationHTTPTests.test_select_without_quote_leaves_task_unchanged",
+      "category": "PreparationHTTPTests",
       "passed": true
     }
   ],

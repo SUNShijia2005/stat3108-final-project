@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-11-18T00:10:34.482914+00:00",
+  "scope": "Local conversation and AI-setup UI; real model capability remains unverified without a user-provided API key.",
+  "live_model_calls": 0,
+  "cases": [
+    {
+      "case": "Greeting returns a friendly greeting, without a shipment-feature menu or no-change status sentence",
+      "result": "pass"
+    },
+    {
+      "case": "Unrelated Beijing tourism statement leaves Shanghai origin, 10kg and selected reference unchanged",
+      "result": "pass"
+    },
+    {
+      "case": "Open-ended question shows missing AI connection honestly and supplies a direct setup button",
+      "result": "pass"
+    },
+    {
+      "case": "Message-local setup button opens model name, password API-key and advanced endpoint/protocol form",
+      "result": "pass"
+    },
+    {
+      "case": "Invalid HTTP model endpoint is rejected with a field-level message, and does not enable or save model settings",
+      "result": "pass"
+    }
+  ],
+  "component_tests": {
+    "python": {
+      "passed": 143,
+      "total": 143
+    },
+    "javascript_draft_cases": {
+      "passed": 17,
+      "total": 17
+    }
+  },
+  "screenshot": "ai-chat-setup-preview.jpg",
+  "final_console_warnings_or_errors": []
+}
