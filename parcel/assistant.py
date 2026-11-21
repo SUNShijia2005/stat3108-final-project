@@ -13,6 +13,11 @@ FIELD_LABELS = {
     "weight_kg": "实际重量", "length_cm": "长度", "width_cm": "宽度", "height_cm": "高度",
     "budget_cny": "预算", "deadline": "期望送达日",
 }
+RATE_FIELD_NAMES_EN = {
+    "origin_province": "origin province", "destination_country": "destination country",
+    "destination_zip": "ZIP code", "goods": "contents", "weight_kg": "weight in kg",
+    "length_cm": "length", "width_cm": "width", "height_cm": "height",
+}
 QUOTE_FIELDS = {"origin_province", "destination_country", "destination_state", "destination_city", "destination_zip", "goods", "weight_kg", "length_cm", "width_cm", "height_cm", "budget_cny", "deadline", "oda_tier", "residential", "fuel_percent"}
 ORIGINS = [
     ("上海", "Shanghai"), ("shanghai", "Shanghai"), ("北京", "Beijing"), ("beijing", "Beijing"),
@@ -192,7 +197,8 @@ def _quote_text(result, english, prefix=""):
     if result["status"] != "estimated":
         if english:
             missing = result.get("missing", [])
-            return prefix + ("Please provide: " + ", ".join(missing) if missing else "The shipment needs eligibility or service-acceptance review. See the rate details.")
+            names = [RATE_FIELD_NAMES_EN.get(field, field.replace("_", " ")) for field in missing]
+            return prefix + ("Please provide " + ", ".join(names) + "." if names else "Confirm eligibility with the carrier before comparing rates.")
         return prefix + result["message"]
     options = "; ".join(option["service"] + " ¥" + format(option["known_subtotal"], ",.2f") for option in result["options"])
     return prefix + (

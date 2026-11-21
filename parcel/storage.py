@@ -34,6 +34,15 @@ class Store:
 
     def list(self):
         with self.connect() as conn: rows=conn.execute("SELECT body FROM tasks ORDER BY updated DESC LIMIT 30").fetchall()
-        return [{"id":t["id"],"updated_at":t["updated_at"],"version":t["version"],"goods":t["fields"].get("goods"),"city":t["fields"].get("destination_city"),
-                 "origin":t["fields"].get("origin_province"),"destination_zip":t["fields"].get("destination_zip"),"weight_kg":t["fields"].get("weight_kg"),
-                 "selected_service":(t.get("selected_service") or {}).get("service"),"is_demo":t.get("is_demo",False)} for t in (json.loads(row[0]) for row in rows)]
+        return [self.history_row(json.loads(row[0])) for row in rows]
+
+    @staticmethod
+    def history_row(task):
+        fields=task["fields"]
+        tracking=task.get("tracking") or {}
+        return {"id":task["id"],"updated_at":task["updated_at"],"version":task["version"],
+                "goods":fields.get("goods"),"city":fields.get("destination_city"),"origin":fields.get("origin_province"),
+                "destination_zip":fields.get("destination_zip"),"weight_kg":fields.get("weight_kg"),
+                "selected_service":(task.get("selected_service") or {}).get("service"),"is_demo":task.get("is_demo",False),
+                "tracking":({"number":tracking.get("tracking_number"),"status":tracking.get("status"),"queried_at":tracking.get("queried_at")}
+                            if tracking.get("data_type")=="live_api" else None)}

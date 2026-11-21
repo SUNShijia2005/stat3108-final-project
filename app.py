@@ -20,7 +20,7 @@ from parcel.domain import quote,document_check,document_html,summary_html,select
 from parcel.assistant import chat,update
 from parcel.knowledge import retrieve,DOCS
 from parcel.storage import Store
-from parcel.tracking import track,configured as tracking_configured
+from parcel.tracking import track,SAMPLE,configured as tracking_configured
 from parcel.model import configured as model_configured
 
 LOCK=threading.RLock()
@@ -95,6 +95,7 @@ class Handler(BaseHTTPRequestHandler):
             if path=="/api/health": return self.send({"status":"ok","model_configured":model_configured(),"model":model_settings()["model"],"api_style":model_settings()["api_style"],"tracking_configured":tracking_configured(),"mode":"model" if model_configured() else "workflow","rate_count":1230,"document_count":len(DOCS),"database":"local SQLite"})
             if path=="/api/model/settings": return self.send(model_settings())
             if path=="/api/tasks": return self.send({"tasks":STORE.list()})
+            if path=="/api/track/sample": return self.send(track(SAMPLE))
             if path=="/api/task": return self.send(public_task(STORE.get(params.get("id",[""])[0])))
             if path=="/api/sources": return self.send({"documents":DOCS,"rates_metadata":{k:v for k,v in RATES.items() if k!="services"}})
             if path=="/api/evaluation":
@@ -113,10 +114,15 @@ class Handler(BaseHTTPRequestHandler):
                 kind=params.get("kind",["invoice"])[0]
                 text="description,quantity,unit_price,hs_code\nCotton T-shirt,2,25,\n" if kind=="invoice" else "description,quantity\nCotton T-shirt,2\n"
                 return self.send(text,ctype="text/csv; charset=utf-8",download=kind+"-template.csv")
-            static={"/":"index.html","/app.js":"app.js","/drafts.js":"drafts.js","/style.css":"style.css"}
-            if path in static:
-                f=ROOT/"static"/static[path]
-                return self.send(f.read_bytes(),ctype=(mimetypes.guess_type(f.name)[0] or "text/plain")+"; charset=utf-8")
+            pages={"/","/shipping","/tracking","/documents","/checklist","/help","/project"}
+            static={"/app.js":"app.js","/drafts.js":"drafts.js","/style.css":"style.css",
+                    "/dm-sans.ttf":"dm-sans.ttf","/world-land.svg":"world-land.svg","/france-land.svg":"france-land.svg",
+                    "/pacific-globe.svg":"pacific-globe.svg"}
+            asset="index.html" if path in pages else static.get(path)
+            if asset:
+                f=ROOT/"static"/asset
+                mime=mimetypes.guess_type(f.name)[0] or "application/octet-stream"
+                return self.send(f.read_bytes(),ctype=mime+("; charset=utf-8" if mime.startswith("text/") else ""))
             self.send({"error":"Not found"},404)
         except KeyError: self.send({"error":"运输任务不存在。"},404)
         except (ValidationError,ValueError) as error: self.send({"error":str(error)},400)

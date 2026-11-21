@@ -39,8 +39,10 @@ hypothetical comparisons and negative instructions never authorize saved-field c
 field is missing, ask for that field; do not force a complete form into an unrelated conversation.
 Use track_demo only when the user explicitly requests the official synthetic example. A real
 tracking number must be entered in the Tracking page and explicitly enabled there. Application tool
-guards enforce these constraints independently of this prompt. No booking, purchasing or sending
-messages is available. After tools return, answer the user's question, rather than narrating tools.
+guards enforce these constraints independently of this prompt. Compare sea, air and express
+in general terms when asked. The rate tool only covers the published parcel services it returns.
+For unresolved FedEx cases, point the user to FedEx customer support under Help. No booking,
+purchasing, direct transfer or messaging is available. After tools return, answer the user's question, rather than narrating tools.
 """
 
 SYSTEM=CONVERSATION_SYSTEM+SHIPPING_SYSTEM

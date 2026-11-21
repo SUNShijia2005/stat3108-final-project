@@ -3,23 +3,68 @@ const $ = id => document.getElementById(id);
 const all = selector => [...document.querySelectorAll(selector)];
 const D = ParcelDrafts;
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money = value => Number(value).toLocaleString('zh-CN', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+const money = value => Number(value).toLocaleString(language === 'en' ? 'en-US' : 'zh-CN', {minimumFractionDigits:2, maximumFractionDigits:2});
 const sample = 'SHIP24_SAMPLE_DELIVERED_000';
 const titles = {
-  workspace:['需求与对话','和助手聊聊','直接提问、讨论方案，或告诉我这次想怎么寄。'],
-  rates:['比较参考方案','比较这次寄件的参考费用','保存包裹信息后，选择一个待核验的参考方案。'],
-  documents:['核对寄件文件','把货品和文件核对清楚','先保存草稿，再检查数量、金额和缺少的信息。'],
-  summary:['寄件准备清单','查看准备结果和待办','把已确认的信息与仍需核验的项目放在一起。'],
-  tracking:['查询物流','用实际运单号查询物流','真实查询与独立官方示例分别显示。'],
-  knowledge:['运输问题与依据','查找运输规则','查看适用说明和来源，补充当前寄件需求。'],
-  evaluation:['项目与评估','实现范围与测试','区分业务工具检查、用户操作和线上模型实验。']
+  documents:['寄件文件', 'Shipping documents'],
+  summary:['寄件准备清单', 'Shipping checklist'],
+  knowledge:['寄件帮助', 'Shipping help'],
+  evaluation:['项目与评估', 'Project and testing']
 };
+const paths = {
+  workspace:'/', rates:'/shipping', tracking:'/tracking', documents:'/documents',
+  summary:'/checklist', knowledge:'/help', evaluation:'/project'
+};
+const pageHeadings = {workspace:'landing-title', rates:'shipping-title', tracking:'tracking-title'};
+const progressSteps = {
+  details:['包裹信息','Parcel details','rates'], service:['运输方案','Service','rates'],
+  documents:['寄件文件','Documents','documents'], summary:['准备清单','Checklist','summary']
+};
+const tr = (zh, en) => language === 'en' ? en : zh;
 const fieldLabels = {origin_province:'起运省市', destination_country:'目的地国家', destination_city:'目的地城市', destination_state:'州代码', destination_zip:'邮编', goods:'货品', weight_kg:'实际重量', length_cm:'长度', width_cm:'宽度', height_cm:'高度', budget_cny:'预算', deadline:'期望送达', residential:'住宅属性', oda_tier:'偏远地区档位', fuel_percent:'燃油比例', items:'货品明细', sender_name:'寄件人姓名', sender_address:'寄件人地址', sender_phone:'寄件人电话', recipient_name:'收件人姓名', recipient_address:'收件人地址', recipient_phone:'收件人电话', currency:'币种', country_of_origin:'原产地', invoice_total:'发票合计'};
 const serviceNames = {IE:'国际经济', IP:'国际优先', IPE:'国际优先特快'};
 const forms = {rates: $('rate-form'), documents: $('document-form')};
 let task, health, busy = false, currentView = 'workspace', drafts = {}, storageAvailable = true;
 let lastMessageKey = '', knowledgeLoaded = false, evaluationLoaded = false;
 let disabledByBusy = [], modelSettings = null, chatPending = false;
+let language = storageGet('parcel-language') === 'en' ? 'en' : 'zh';
+let historyRows = [], drawerTrigger, sampleTracking, inlineCollapsed = false;
+const smallScreen = window.matchMedia('(max-width: 670px)');
+const wideShipping = window.matchMedia('(min-width: 991px)');
+const assistant = $('assistant-drawer');
+const translations = [
+  ['[data-en]', 'textContent', 'en'],
+  ['[data-placeholder-en]', 'placeholder', 'placeholderEn'],
+  ['[data-aria-en]', 'aria-label', 'ariaEn']
+].flatMap(([selector, key, source]) => all(selector).map(element => ({
+  element, key, en:element.dataset[source], zh:key === 'textContent' ? element.textContent : element.getAttribute(key)
+})));
+
+function applyLanguage() {
+  document.documentElement.lang = tr('zh-CN', 'en');
+  for (const {element, key, en, zh} of translations) {
+    if (key === 'textContent') element.textContent = tr(zh, en);
+    else element.setAttribute(key, tr(zh, en));
+  }
+  $('language').textContent = tr('EN', '中文');
+  $('language').lang = tr('en', 'zh-CN');
+  $('language').setAttribute('aria-label', tr('Switch to English', '切换到中文'));
+  $('carrier-support').href = 'https://www.fedex.com/' + tr('zh-cn', 'en-cn') + '/customer-support.html';
+  updatePageHeading(currentView);
+  if (task) {
+    renderMessages(); renderDraftStatus(); renderQuote(); renderChecks(); renderTracking(); renderProgress(); renderSummary();
+    renderHistory();
+    renderAssistantShipment();
+  }
+  if (modelSettings) renderModelSettings();
+}
+$('language').onclick = () => {
+  language = tr('en', 'zh');
+  storageSet('parcel-language', language);
+  applyLanguage();
+};
+applyLanguage();
 
 function storageGet(key) { try { return localStorage.getItem(key); } catch { storageAvailable = false; return null; } }
 function storageSet(key, value) { try { localStorage.setItem(key, value); return true; } catch { storageAvailable = false; return false; } }
@@ -55,19 +100,20 @@ function setBusy(on, label) {
   busy = on; $('busy-status').hidden = !on || chatPending;
   $('chat-pending').hidden = !on || !chatPending;
   $('busy-status').textContent = on ? label : '';
-  document.querySelector('main').setAttribute('aria-busy', String(on));
+  $('service-panel').setAttribute('aria-busy', String(on && !chatPending));
   if (on) {
     disabledByBusy = [];
     lockNewControls();
   } else {
     disabledByBusy.forEach(el => { if (el.isConnected) el.disabled = false; }); disabledByBusy = [];
-    fitConversation();
   }
 }
 function lockNewControls() {
   const controls = all('[data-mutation], form input, form select, form textarea, #import-invoice, #import-packing, #task-history, #add-item, #use-goods, .remove-item, #discard-rates, #discard-documents').filter(el => !el.disabled);
-  controls.forEach(el => { el.disabled = true; });
-  disabledByBusy.push(...controls);
+  // Chat updates the saved task. The user can keep editing the form draft while it runs.
+  const locked = controls.filter(el => !chatPending || !el.matches('#rate-form input, #rate-form select'));
+  locked.forEach(el => { el.disabled = true; });
+  disabledByBusy.push(...locked);
 }
 async function run(label, operation, errorKind) {
   if (busy) { toast('正在处理上一步，请稍候。'); return; }
@@ -97,7 +143,11 @@ function savedValues(kind) {
   return values;
 }
 function fill(form, values) {
-  for (const element of form.elements) if (element.name) element.value = values[element.name] == null ? '' : String(values[element.name]);
+  for (const element of form.elements) {
+    if (!element.name) continue;
+    const value = values[element.name] == null ? '' : String(values[element.name]);
+    if (element.value !== value) element.value = value;
+  }
 }
 function collect(form) {
   const out = {};
@@ -123,7 +173,7 @@ function rememberDraft(kind) {
     if (!D.saveDraft(draftStorage(), draftKey(kind), drafts[kind])) storageAvailable = false;
   } else { delete drafts[kind]; storageRemove(draftKey(kind)); }
   renderDraftStatus();
-  if (kind === 'rates') renderQuote();
+  if (kind === 'rates') { renderQuote(); renderProgress(); renderAssistantShipment(); }
   else { clearFieldErrors(); renderChecks(); }
 }
 function restoreDrafts() {
@@ -148,16 +198,163 @@ async function action(path, body = {}, committedKind) {
   if (committedKind) { delete drafts[committedKind]; storageRemove(draftKey(committedKind)); }
   task = data.task; render(); updateCurrentHistory(); return data.output;
 }
-function go(view) {
+
+function viewForPath() {
+  return Object.keys(paths).find(view => paths[view] === location.pathname) || 'workspace';
+}
+function updatePageHeading(view) {
+  if (titles[view]) $('page-title').textContent = tr(...titles[view]);
+  document.title = view === 'workspace' ? 'Parcel Desk'
+    : $(pageHeadings[view] || 'page-title').textContent + ' · Parcel Desk';
+}
+function showActiveResults() {
+  $('quote-output').hidden = !task?.quote;
+  $('tracking-output').hidden = !task;
+}
+function go(view, focus = false, updateHistory = true) {
+  if (!Object.hasOwn(paths, view)) return;
+  if (updateHistory && location.pathname !== paths[view]) history.pushState(null, '', paths[view]);
   currentView = view;
-  all('.view').forEach(el => el.classList.toggle('active', el.id === 'view-' + view));
-  all('.nav').forEach(el => el.classList.toggle('active', el.dataset.view === view));
-  [$('current-view').textContent, $('page-title').textContent, $('page-subtitle').textContent] = titles[view];
-  window.scrollTo({top:0, behavior:'auto'});
-  if (view === 'workspace') fitConversation();
-  if (view === 'summary') renderSummary();
+  for (const section of all('main > .view, .secondary-pages > .view')) {
+    section.classList.toggle('active', section.id === 'view-' + view);
+  }
+  for (const nav of all('.nav')) {
+    const active = nav.dataset.view === view;
+    nav.classList.toggle('active', active);
+    if (active) nav.setAttribute('aria-current', 'page');
+    else nav.removeAttribute('aria-current');
+  }
+  $('page-title').hidden = !titles[view];
+  $('task-progress').hidden = !['documents', 'summary'].includes(view);
+  updatePageHeading(view);
+  if (view === 'workspace' && !hasEnteredHome) {
+    $('view-workspace').classList.add('landing-enter');
+    hasEnteredHome = true;
+  }
+  syncFlight();
+  syncAssistantPlacement();
+  if (view === 'summary' && task) renderSummary();
   if (view === 'knowledge' && !knowledgeLoaded) loadKnowledge().catch(error => toast(error.message, true));
   if (view === 'evaluation' && !evaluationLoaded) loadEvaluation().catch(error => toast(error.message, true));
+  if (focus) {
+    window.scrollTo(0, 0);
+    $(pageHeadings[view] || 'page-title').focus({preventScroll:true});
+  }
+}
+function revealResult(id) {
+  const result = $(id);
+  const view = id === 'quote-output' ? 'rates' : 'tracking';
+  if (result.hidden || view !== currentView) return;
+  result.focus({preventScroll:true});
+  result.scrollIntoView({block:'start'});
+}
+
+const scene = $('landing-scene');
+const flight = scene.querySelector('animateMotion');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let hasEnteredHome = false, flightStarted = false, sceneVisible = true;
+function syncFlight() {
+  if (typeof flight.beginElement !== 'function') return;
+  const play = currentView === 'workspace' && sceneVisible && !document.hidden && !reducedMotion.matches;
+  scene.classList.toggle('flight-playing', play);
+  if (play) {
+    scene.unpauseAnimations();
+    if (!flightStarted) {
+      flight.beginElement();
+      flightStarted = true;
+    }
+  } else {
+    scene.pauseAnimations();
+  }
+}
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(([entry]) => {
+    sceneVisible = entry.isIntersecting;
+    syncFlight();
+  });
+  observer.observe(scene);
+}
+reducedMotion.addEventListener('change', syncFlight);
+document.addEventListener('visibilitychange', syncFlight);
+
+const pointerMotion = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+for (const button of all('.landing-action')) {
+  const resetPosition = () => {
+    button.style.removeProperty('--magnet-x');
+    button.style.removeProperty('--magnet-y');
+  };
+  button.addEventListener('pointermove', event => {
+    if (!pointerMotion.matches || event.pointerType !== 'mouse') return;
+    const rect = button.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - .5;
+    const y = (event.clientY - rect.top) / rect.height - .5;
+    const ratio = 4 / Math.max(.5, Math.hypot(x, y));
+    button.style.setProperty('--magnet-x', x * ratio + 'px');
+    button.style.setProperty('--magnet-y', y * ratio + 'px');
+  });
+  button.addEventListener('pointerleave', resetPosition);
+  button.addEventListener('blur', resetPosition);
+  pointerMotion.addEventListener('change', resetPosition);
+}
+function syncDrawer() {
+  const modal = smallScreen.matches && !assistant.hidden && !assistant.classList.contains('assistant-inline');
+  for (const el of all('body > header, body > main, body > footer, .skip-link')) el.inert = modal;
+  assistant.setAttribute('role', modal ? 'dialog' : 'complementary');
+  if (modal) assistant.setAttribute('aria-modal', 'true');
+  else assistant.removeAttribute('aria-modal');
+  for (const button of all('[data-ask]')) button.setAttribute('aria-expanded', String(!assistant.hidden));
+}
+function syncAssistantPlacement() {
+  const inline = currentView === 'rates' && wideShipping.matches;
+  const wasInline = assistant.classList.contains('assistant-inline');
+  if (inline && !wasInline) {
+    $('shipping-assistant').append(assistant);
+    document.body.classList.remove('drawer-open');
+  } else if (!inline && wasInline) {
+    document.body.append(assistant);
+  }
+  assistant.classList.toggle('assistant-inline', inline);
+  assistant.hidden = inline ? inlineCollapsed : !document.body.classList.contains('drawer-open');
+  $('shipping-ask').hidden = inline && !inlineCollapsed;
+  renderAssistantShipment();
+  syncDrawer();
+}
+function openAssistant(trigger) {
+  if (!assistant.hidden) { $('chat-message').focus(); return; }
+  drawerTrigger = trigger;
+  if (assistant.classList.contains('assistant-inline')) inlineCollapsed = false;
+  else document.body.classList.add('drawer-open');
+  syncAssistantPlacement();
+  $('messages').scrollTop = $('messages').scrollHeight;
+  $('chat-message').focus({preventScroll:true});
+}
+function closeAssistant() {
+  const inline = assistant.classList.contains('assistant-inline');
+  if (inline) inlineCollapsed = true;
+  else document.body.classList.remove('drawer-open');
+  syncAssistantPlacement();
+  if (drawerTrigger?.offsetParent) drawerTrigger.focus({preventScroll:true});
+  else if (inline) $('shipping-ask').focus({preventScroll:true});
+  else $('main').focus({preventScroll:true});
+  drawerTrigger = null;
+}
+smallScreen.addEventListener('change', syncDrawer);
+wideShipping.addEventListener('change', syncAssistantPlacement);
+function renderAssistantShipment() {
+  const panel = $('assistant-shipment');
+  panel.hidden = currentView !== 'rates' || !task;
+  if (panel.hidden) return;
+  const field = formValues('rates');
+  const dimensions = [field.length_cm, field.width_cm, field.height_cm];
+  const values = [
+    [tr('从', 'From'), [tr('中国大陆','Mainland China'), field.origin_province].filter(Boolean).join(' · ')],
+    [tr('到', 'To'), [tr('美国','United States'), field.destination_city, field.destination_zip].filter(Boolean).join(' · ')],
+    [tr('物品内容','Contents'), field.goods],
+    [tr('重量','Weight'), field.weight_kg == null ? '' : field.weight_kg + ' kg'],
+    [tr('尺寸','Dimensions'), dimensions.every(value => value != null) ? dimensions.join(' × ') + ' cm' : '']
+  ];
+  $('assistant-shipment-values').innerHTML = values.map(([label, value]) =>
+    '<dt>' + label + '</dt><dd>' + esc(value || '—') + '</dd>').join('');
 }
 function refs(rows) {
   return rows?.length ? '<details class="references"><summary>查看依据（' + rows.length + '）</summary><div class="source-chips">' + rows.map(d => '<a target="_blank" rel="noopener noreferrer" href="' + esc(d.source_url) + '">' + esc(d.title || d.id) + (d.page ? ' · p.' + esc(d.page) : '') + ' ↗</a>').join('') + '</div></details>' : '';
@@ -165,13 +362,18 @@ function refs(rows) {
 function renderMessages() {
   const messages = task.messages || [], previousScroll = $('messages').scrollTop;
   const key = task.id + ':' + messages.length;
+  $('quick-questions').hidden = messages.length > 0;
   $('messages').innerHTML = messages.length ? messages.map(m => {
-    const changes = m.changes?.length ? '<div class="change-box">已更新：' + m.changes.map(c => esc(c.label || fieldLabels[c.field] || c.field) + ' ' + esc(c.before ?? '未填写') + ' → ' + esc(c.after ?? '未填写')).join('；') + '</div>' : '';
+
+    const changes = m.changes?.length ? '<div class="change-box">' + tr('已更新：', 'Updated: ') + m.changes.map(c =>
+      esc(fieldName(c.field, c.label)) + ' ' + esc(c.before ?? '—') + ' → ' + esc(c.after ?? '—')
+    ).join(' · ') + ' <button type="button" class="text-button" data-form-updates>' +
+      tr('查看表单', 'View form') + ' →</button></div>' : '';
     const scenario = m.scenario?.differences?.length ? '<div class="scenario-box"><b>情景比较</b>' + m.scenario.differences.map(d => '<div>' + esc(d.service) + '：¥' + money(d.after) + '（' + (d.delta < 0 ? '减少 ' : '增加 ') + '¥' + money(Math.abs(d.delta)) + '）</div>').join('') + '</div>' : '';
     const trace = m.trace?.length ? '<details class="trace"><summary>处理记录（' + m.trace.length + '步）</summary>' + m.trace.map(t => '<p>' + esc(({update_shipment:'更新需求',estimate_rates:'计算参考费用',search_rules:'检索资料',check_documents:'核对文件',track_demo:'读取官方示例',estimate_scenario:'试算方案'})[t.tool] || t.tool) + ' · ' + esc(t.duration_ms) + ' ms</p>').join('') + '</details>' : '';
     const connection = m.role === 'assistant' && (m.model_error || m.connection_required) ? '<div class="message-connection">' + (m.model_error ? '<span>AI 连接未成功：' + esc(m.model_error) + '</span>' : '') + '<button class="text-button" type="button" data-model-settings>' + (m.model_error ? '检查 AI 设置' : '启用 AI 对话') + '</button></div>' : '';
-    return '<div class="message ' + (m.role === 'user' ? 'user' : '') + '"><span class="message-icon">' + (m.role === 'user' ? '你' : '↗') + '</span><div class="message-body">' + (m.role === 'user' ? '' : '<div class="message-label">助手</div>') + '<div class="message-text">' + esc(m.text) + '</div>' + connection + changes + scenario + refs(m.citations) + trace + '</div></div>';
-  }).join('') : '<div class="message"><span class="message-icon">↗</span><div class="message-body"><div class="message-label">寄件助手</div><div class="message-text">你好！想先聊点什么？\n\n你可以直接提问，也可以告诉我寄件的想法，我们一起整理。</div></div></div>';
+    return '<div class="message ' + (m.role === 'user' ? 'user' : '') + '"><div class="message-body"><div class="message-text">' + esc(m.text) + '</div>' + connection + changes + scenario + refs(m.citations) + trace + '</div></div>';
+  }).join('') : '<div class="message"><div class="message-body"><div class="message-text">' + tr('你打算从哪儿寄到哪儿？', 'Where are you shipping from and to?') + '</div></div></div>';
   const container = $('messages'), latest = container.lastElementChild;
   // Start a new answer where its text begins, including on short screens.
   container.scrollTop = key !== lastMessageKey && latest
@@ -181,15 +383,17 @@ function renderMessages() {
 }
 function renderDraftStatus() {
   if (!task) return;
-  const dirtyNames = [];
+  $('discard-rates').hidden = !dirty('rates');
   for (const kind of Object.keys(forms)) {
     const element = $(kind === 'rates' ? 'rate-draft-status' : 'document-draft-status');
     if (!drafts[kind]) { element.textContent = ''; continue; }
-    dirtyNames.push(kind === 'rates' ? '包裹信息' : '单证');
     const merged = D.mergeDraft(drafts[kind].base, drafts[kind].values, savedValues(kind));
-    element.textContent = (storageAvailable ? '本机草稿已保留，尚未保存到任务。' : '草稿暂存在当前页面，浏览器存储不可用，请及时保存。') + (merged.conflicts.length ? ' 与任务当前版本冲突：' + merged.conflicts.map(k => fieldLabels[k] || k).join('、') + '。' : ' 切换页面后仍会保留。');
+
+    const conflict = merged.conflicts.map(key => fieldName(key)).join(', ');
+    element.textContent = merged.conflicts.length
+      ? tr('请核对冲突字段：', 'Review conflicting fields: ') + conflict
+      : storageAvailable ? tr('草稿已保留', 'Draft saved locally') : tr('草稿尚未保存', 'Draft not saved');
   }
-  $('save-status').textContent = dirtyNames.length ? dirtyNames.join('、') + '有未保存草稿' : (task.is_demo ? '示例任务 · 已保存' : '任务已保存');
 }
 function itemRow(item = {}) {
   const row = document.createElement('tr');
@@ -223,45 +427,269 @@ function renderChecks() {
     });
   });
 }
+const englishFields = {
+  origin_province:'Origin', destination_country:'Destination country', destination_city:'City',
+  destination_state:'State', destination_zip:'ZIP code', goods:'Contents', weight_kg:'Weight',
+  length_cm:'Length', width_cm:'Width', height_cm:'Height', budget_cny:'Budget', deadline:'Arrival date',
+  residential:'Address type', oda_tier:'Remote area tier', fuel_percent:'Fuel surcharge', items:'Items',
+  sender_name:'Sender name', sender_address:'Sender address', sender_phone:'Sender phone',
+  recipient_name:'Recipient name', recipient_address:'Recipient address', recipient_phone:'Recipient phone',
+  currency:'Currency', country_of_origin:'Country of origin', invoice_total:'Invoice total'
+};
+function fieldName(key, fallback) {
+  return tr(fallback || fieldLabels[key], englishFields[key]) || fallback || fieldLabels[key] || key;
+}
+function serviceName(code, fallback = code) {
+  return tr(serviceNames[code], {IE:'International Economy', IP:'International Priority', IPE:'International Priority Express'}[code]) || fallback;
+}
+function pendingCost(label) {
+  if (language !== 'en') return label;
+  return {
+    '税费、清关服务费及其他特殊费用':'Duties, taxes and clearance fees',
+    '取件偏远地区资格':'Remote pickup surcharge',
+    '账户价格资格与当前服务覆盖':'Account eligibility and service coverage',
+    '住宅地址属性':'Residential address classification',
+    '派送偏远地区档位及住宅费适用性':'Remote area and residential delivery surcharges',
+    '当期燃油附加费':'Current fuel surcharge'
+  }[label] || (label.includes('的时效要求') ? 'Delivery by ' + (label.match(/\d{4}-\d{2}-\d{2}/)?.[0] || 'the requested date') : label);
+}
+function costName(component) {
+  if (language !== 'en') return component.label;
+  if (component.source === 'inbound') return 'US inbound processing fee';
+  if (component.source === 'fuel') return 'Fuel scenario (' + (component.label.match(/[\d.]+%/)?.[0] || '') + ')';
+  if (component.source === 'remote') return component.label.includes('住宅')
+    ? 'US residential delivery' : 'Remote delivery surcharge (' + (component.label.match(/ [ABC]/)?.[0]?.trim() || '') + ')';
+  return 'Published base charge';
+}
 function renderQuote() {
   const quote = task.quote;
-  const unsaved = dirty('rates') ? '<div class="draft-status">包裹信息有未保存修改。下方为上次保存的估算，请保存并重新估算后再选择方案。</div>' : '';
-  if (!quote) { $('quote-output').innerHTML = unsaved + '<div class="empty-state"><h2>补齐信息后比较费用</h2><p>需要起运省市、具体货品、美国邮编、实际重量和长宽高。</p></div>'; return; }
-  if (quote.status !== 'estimated') { $('quote-output').innerHTML = unsaved + '<article class="card"><span class="pill amber">尚不能生成参考方案</span><h2>' + esc(quote.message) + '</h2><p class="quote-note">补充信息或核对适用条件后，再保存并估算。</p></article>'; return; }
-  $('quote-output').innerHTML = unsaved + '<div class="weight-summary"><div><small>实际重量</small><strong>' + quote.actual_kg + ' kg</strong></div><div><small>体积重量</small><strong>' + quote.volumetric_kg + ' kg</strong></div><div><small>计费重量 · 区 ' + quote.zone + '</small><strong>' + quote.billable_kg + ' kg</strong></div></div>' + quote.options.map((option, i) => {
+  showActiveResults();
+  if (!quote) { $('quote-output').replaceChildren(); return; }
+  const unsaved = dirty('rates') ? '<p class="draft-status">' +
+    tr('表单已修改。重新比较后可选择方案。', 'Shipment edited. Compare rates again to select a service.') + '</p>' : '';
+  const heading = '<div class="result-heading"><h2>' + tr('参考运费', 'Reference rates') + '</h2>' +
+    (quote.status === 'estimated' ? '<p>' + tr('人民币 · 已知费用小计', 'CNY · Known charges only') + '</p>' : '') + '</div>';
+  if (quote.status !== 'estimated') {
+    const issue = language === 'zh' ? quote.message : quote.missing?.length
+      ? 'Required: ' + quote.missing.map(key => fieldName(key)).join(', ')
+      : quote.status === 'outside_scope' ? 'This shipment falls outside the published rate coverage.' : 'Confirm eligibility with the carrier before quoting.';
+    $('quote-output').innerHTML = heading + unsaved + '<p class="form-error">' + esc(issue) + '</p>';
+    return;
+  }
+  const weights = [
+    [tr('实际重量', 'Actual weight'), quote.actual_kg],
+    [tr('体积重量', 'Dimensional weight'), quote.volumetric_kg],
+    [tr('计费重量', 'Billable weight'), quote.billable_kg]
+  ].map(([label, value]) => '<span>' + label + '<strong>' + esc(value) + ' kg</strong></span>').join('');
+  const options = quote.options.map(option => {
     const selected = task.selected_service?.service === option.service;
-    return '<article class="quote-card ' + (selected ? 'selected' : '') + '"><div class="quote-heading"><div><span class="service-code">' + esc(option.service) + '</span><h3 class="service-name">' + esc(serviceNames[option.service] || option.name) + '</h3>' + (i === 0 ? '<span class="pill">最低已知参考小计</span>' : '') + '</div><div class="price"><small>参考小计 · 人民币</small>¥' + money(option.known_subtotal) + '</div></div><details class="advanced"><summary>查看费用组成及来源</summary>' + option.components.map(c => '<div class="cost-row"><span>' + esc(c.label) + '</span><strong>¥' + money(c.amount) + '</strong></div>').join('') + '<a target="_blank" rel="noopener" href="' + esc(option.source_url) + '">来源费率表 · 第 ' + option.source_page + ' 页 ↗</a></details><div class="quote-meta"><span>' + ({unknown:'未设置预算',over:'已知费用已超预算',within_known_cost:'已知小计在预算内，另有待确认费用'}[option.budget_status]) + '</span></div><div class="quote-foot"><span class="quote-note">时效与地址覆盖待核验</span><button class="button ' + (selected ? 'secondary' : 'primary') + '" data-select="' + esc(option.service) + '" data-mutation ' + (dirty('rates') ? 'disabled' : '') + '>' + (selected ? '已选参考方案 ✓' : '选择此参考方案') + '</button></div></article>';
-  }).join('') + '<article class="card"><h3>确定最终费用前还需要核对</h3><ul class="pending-list">' + quote.pending.map(p => '<li>' + esc(p) + '</li>').join('') + '</ul><details class="advanced"><summary>费率适用范围与日期</summary><p>单件自备包装，广东和福建以外的中国大陆出口。账户与付款资格需确认。费率版本自 ' + esc(quote.effective_from) + ' 生效，资料收集于 ' + esc(quote.source_collected_on) + '。燃油情景只作用于基础运费，未在线核验。</p></details></article>';
+    const selectLabel = selected ? tr('已选 ✓', 'Selected ✓') : tr('选择方案', 'Select service');
+    const costs = option.components.map(component => '<div class="cost-row"><span>' + esc(costName(component)) +
+      '</span><strong>¥' + money(component.amount) + '</strong></div>').join('');
+    return '<article class="quote-row' + (selected ? ' selected' : '') + '"><div class="quote-main"><h3 class="service-name">' +
+      esc(serviceName(option.service, option.name)) + '</h3><div class="price">¥' + money(option.known_subtotal) + '</div>' +
+      '<button type="button" class="button secondary" data-select="' + esc(option.service) + '" data-mutation' +
+      (dirty('rates') ? ' disabled' : '') + '>' + selectLabel + '</button></div>' +
+      '<details class="advanced"><summary>' + tr('费用明细与来源', 'Breakdown and source') + '</summary>' + costs +
+      (option.budget_status === 'over' ? '<p class="form-error">' + tr('已知费用超出预算', 'Known charges exceed budget') + '</p>' : '') +
+      '<a target="_blank" rel="noopener" href="' + esc(option.source_url) + '">' +
+      tr('公开费率表 · 第 ', 'Published rate sheet · p. ') + esc(option.source_page) + ' ↗</a></details></article>';
+  }).join('');
+  $('quote-output').innerHTML = heading + unsaved + '<div class="weight-summary">' + weights + '</div>' +
+    '<div class="quote-list">' + options + '</div><details class="advanced pending-rates"><summary>' +
+    tr('待确认费用与适用范围', 'Charges to confirm and rate coverage') + '</summary><ul>' +
+    quote.pending.map(item => '<li>' + esc(pendingCost(item)) + '</li>').join('') + '</ul><p>' +
+    tr('适用于广东与福建以外中国大陆寄往美国的单件自备包装。账户资格、地址覆盖和送达时效需向承运人核对。费率生效日 ',
+      'Rates cover a single parcel in your own packaging from mainland China (excluding Guangdong and Fujian) to the US. Confirm eligibility, coverage and transit time with the carrier. Rates effective ') +
+    esc(quote.effective_from) + '.</p></details>';
+}
+const trackingMilestones = {
+  received:['已揽收','Parcel received'], customs_clearance:['清关中','Customs clearance'],
+  delivered:['已送达','Delivered'], in_transit:['运输中','In transit'], pending:['等待更新','Pending'],
+  out_for_delivery:['正在派送','Out for delivery'], available_for_pickup:['可取件','Ready for pickup'],
+  info_received:['已收到运单信息','Label created'], exception:['运输异常','Shipment exception'],
+  failed_attempt:['派送未成功','Delivery attempt failed'], failed_delivery:['派送未成功','Delivery failed'],
+  return_to_sender:['退回寄件人','Returning to sender'], expired:['查询已过期','Tracking expired'], delayed:['运输延误','Delayed']
+};
+function trackingStatus(status) {
+  return trackingMilestones[status] ? tr(...trackingMilestones[status]) : status || tr('等待更新', 'Awaiting update');
+}
+function countryName(code) {
+  if (!code) return '';
+  return /^[A-Z]{2}$/i.test(code) ? new Intl.DisplayNames([tr('zh-CN', 'en')], {type:'region'}).of(code.toUpperCase()) : code;
+}
+function eventLocation(location) {
+  if (typeof location === 'string') return location;
+  if (!location) return '';
+  const parts = [location.city, location.state || location.subdivision, countryName(location.countryCode || location.country)];
+  return [...new Set(parts.filter(value => typeof value === 'string' && value))].join(', ');
+}
+function transportIcon(service, x, y) {
+  const aircraft = /flight|air freight|air cargo|空运/i.test(service || '');
+  const vessel = /ocean|sea freight|vessel|海运/i.test(service || '');
+  if (!aircraft && !vessel) return '';
+  const path = aircraft ? 'M0 9V4l-8-4v-2l8 2v-6a1.5 1.5 0 1 1 3 0v6l8-2v2L3 4v5l3 2v1l-4.5-1-4.5 1v-1Z'
+    : 'M-9 0h18l-3 5H-6Zm4-4h10v4H-5Zm2-3h6v3M-9 8q3 2 6 0 3-2 6 0 3 2 6 0';
+  return '<g transform="translate(' + x + ' ' + y + ')"><circle r="15" fill="#fffaf8"/><path d="' +
+    path + '" fill="none" stroke="#885968" stroke-width="1.35" stroke-linejoin="round"/></g>';
+}
+const previewTracking = {
+  tracking_number:'DEMO-2048', status:'in_transit', data_type:'local_visual_demo',
+  origin_country:'US', destination_country:'CN',
+  events:[
+    {statusMilestone:'received', occurrenceDatetime:'2025-01-10T09:24:00-05:00', description:['纽约仓库已接收包裹','Parcel received at the New York facility']},
+    {statusMilestone:'in_transit', occurrenceDatetime:'2025-01-12T16:30:00-05:00', description:['包裹已离开纽约，前往上海','Parcel departed New York for Shanghai']},
+    {statusMilestone:'customs_clearance', pending:true},
+    {statusMilestone:'out_for_delivery', pending:true}
+  ]
+};
+function renderRouteMap(tracking) {
+  const preview = tracking.data_type === 'local_visual_demo';
+  const official = tracking.data_type === 'official_synthetic_sample';
+  // Country-only markers are approximate and never derived from the shipping form.
+  const countryPoints = {CN:[104,35], US:[-99,39], CA:[-106,54], MX:[-102,24], GB:[-2,54], FR:[2,46],
+    DE:[10,51], JP:[138,37], AU:[134,-24], KR:[128,36], SG:[104,1], HK:[114,22], IN:[79,23]};
+  const countryPoint = code => countryPoints[code?.toUpperCase?.()];
+  let first = countryPoint(tracking.origin_country), last = countryPoint(tracking.destination_country);
+  let labels = [countryName(tracking.origin_country), countryName(tracking.destination_country)];
+  let height = 302, asset = 'world-land', box = '0 0 756 302';
+  let project = ([lon, lat]) => [((lon + 382) % 360) * 2.1, (84 - lat) * 302 / 144];
+  if (preview) {
+    first = [-74.006,40.713]; last = [121.474,31.230];
+    labels = [tr('纽约','New York'), tr('上海','Shanghai')];
+    box = '186 24 513 222';
+  } else if (official) {
+    first = [2.518,49.003]; last = [2.352,48.857];
+    labels = [tr('鲁瓦西', 'Roissy-en-France'), tr('巴黎', 'Paris')];
+    height = 304; asset = 'france-land'; box = '0 0 756 304';
+    project = ([lon, lat]) => [(lon + 6) * 756 / 16, (52 - lat) * 304 / 10];
+  } else if ([tracking.origin_country, tracking.destination_country].sort().join('-') === 'CN-US') {
+    box = '155 14 577 247';
+  }
+  if (!first || !last || (!official && !preview && tracking.origin_country === tracking.destination_country)) return '';
+  const [x1,y1] = project(first).map(Math.round), [x2,y2] = project(last).map(Math.round);
+  const curve = official ? 27 : Math.min(67, 22 + Math.abs(x2 - x1) / 13);
+  const mx = Math.round((x1 + x2) / 2), my = Math.round((y1 + y2) / 2 - curve);
+  const marker = (x,y) => '<g transform="translate(' + x + ' ' + y + ')"><path d="M0 3c-1-2-7-8-7-12a7 7 0 0 1 14 0c0 4-6 10-7 12Z" fill="#a65363" stroke="#fff" stroke-width="1.2"/><circle cx="0" cy="-9" r="2.2" fill="white"/></g>';
+  const label = (x,y,value,anchor) => '<text x="' + x + '" y="' + y + '" text-anchor="' + anchor +
+    '" fill="#513235" font-size="' + (preview ? 15 : 17) + '" font-weight="700" paint-order="stroke" stroke="#f8f5ed" stroke-width="4">' + esc(value) + '</text>';
+  const caption = preview ? tr('示意路线 · 非实时定位', 'Illustrative route · No live location')
+    : official ? tr('示例事件地点 · 路线为示意', 'Sample scan locations · Illustrative route')
+    : tr('国家位置为近似标记 · 路线为示意，无实时定位', 'Approximate country markers · Illustrative route');
+  const plane = preview ? '<use href="#landing-plane-symbol" transform="translate(' + mx + ' ' +
+    (Math.round((my + (y1 + y2) / 2) / 2) - 12) + ') rotate(180) scale(.61)" fill="#f9f7f1" stroke="#a65363" stroke-width="2"/>' :
+    transportIcon(tracking.service, mx, Math.round((my + (y1 + y2) / 2) / 2));
+  return '<figure class="route-map"><svg role="img" aria-label="' + esc(labels.join(' → ') + ' · ' + caption) +
+    '" viewBox="' + box + '"><image href="/' + asset + '.svg" width="756" height="' + height + '"/>' +
+    '<path d="M' + x1 + ' ' + y1 + ' Q' + mx + ' ' + my + ' ' + x2 + ' ' + y2 +
+    '" fill="none" stroke="#af6576" stroke-width="1.8" stroke-dasharray="4 4"/>' +
+    marker(x1,y1) + marker(x2,y2) +
+    label(x1 + (official ? 13 : 0),y1 + (official ? -13 : 16),labels[0],official ? 'start' : 'middle') +
+    label(x2 - (official ? 12 : 0),y2 + (official ? 18 : 17),labels[1],official ? 'end' : 'middle') +
+    plane + '</svg><figcaption>' + caption + '</figcaption></figure>';
 }
 function renderTracking() {
-  const tracking = task.tracking;
-  if (!tracking) { $('tracking-output').innerHTML = '<div class="empty-state"><h2>当前任务尚未关联物流结果</h2><p>填写真实运单号进行查询，或展开上方的独立官方示例。</p></div>'; return; }
-  const demo = tracking.data_type === 'official_synthetic_sample';
-  $('tracking-output').innerHTML = '<div class="tracking-layout"><article class="card tracking-status"><span class="pill ' + (demo ? 'amber' : 'green') + '">' + (demo ? '独立示例 · 与本任务无关联' : 'Ship24 查询结果') + '</span><h2>' + esc(({delivered:'已送达',in_transit:'运输中',pending:'等待更新'})[tracking.status] || tracking.status || '状态待更新') + '</h2><p>' + esc(tracking.tracking_number) + '</p>' + (demo ? '<p>法国官方模拟轨迹，仅展示查询形式。</p>' : '') + '<p>查询记录时间<br>' + esc(tracking.queried_at) + '</p></article><article class="card"><div class="card-head"><h2>物流事件（' + tracking.events.length + '）</h2><a target="_blank" rel="noopener" href="' + esc(tracking.source_url) + '">状态说明 ↗</a></div><div class="timeline">' + tracking.events.map(event => '<div class="timeline-event"><small>' + esc(event.occurrenceDatetime) + '</small><h3>' + esc(event.status || event.statusMilestone || '物流更新') + '</h3><p>' + esc(typeof event.location === 'object' ? JSON.stringify(event.location) : event.location) + '</p></div>').join('') + '</div></article></div>';
+  const tracking = sampleTracking || task.tracking || previewTracking;
+  showActiveResults();
+  const preview = tracking.data_type === 'local_visual_demo';
+  const official = tracking.data_type === 'official_synthetic_sample';
+  const events = tracking.events || [];
+  const latestStatus = tracking.status || events[0]?.statusMilestone;
+  const caption = trackingStatus(latestStatus);
+  const officialLabel = official ? tr('官方模拟示例', 'Official simulated sample') : 'Ship24';
+  const issues = ['exception','failed_attempt','failed_delivery','return_to_sender','expired','delayed'];
+  const scanIssue = !preview && !official && latestStatus !== 'delivered' && issues.includes(events[0]?.statusMilestone)
+    ? '<p class="tracking-alert">' + esc(trackingStatus(events[0].statusMilestone)) + '</p>' : '';
+  const eta = formatDeliveryDate(tracking.estimated_delivery) || tr('待确认', 'Pending');
+  const route = preview ? tr('纽约 → 上海', 'New York → Shanghai') : [
+    countryName(tracking.origin_country),
+    [tracking.destination_city, countryName(tracking.destination_country)].filter(Boolean).join(', ')
+  ].filter(Boolean).join(' → ');
+  const service = preview ? tr('国际快递', 'International express') : tracking.service;
+  const details = [service, route].filter(Boolean).map(esc).join(' · ');
+  const timeline = events.map(event => {
+    const title = event.statusMilestone ? trackingStatus(event.statusMilestone) : event.status;
+    const date = activityDate(event.occurrenceDatetime, {dateStyle:'medium', timeStyle:'short'});
+    const location = eventLocation(event.location);
+    const description = event.description ? tr(...event.description) : event.status !== title ? event.status : '';
+    return '<li class="timeline-event' + (event.pending ? ' pending' : '') + '"><h3>' + esc(title || tr('物流更新','Tracking update')) +
+      '</h3><div class="event-meta">' + (date ? '<time datetime="' + esc(event.occurrenceDatetime) + '">' + esc(date) + '</time>' : '') +
+      (location ? '<p>' + esc(location) + '</p>' : '') +
+      (event.pending ? '<p>' + tr('待更新','Awaiting update') + '</p>' : '') + '</div>' +
+      (description ? '<p class="event-description">' + esc(description) + '</p>' : '') + '</li>';
+  }).join('');
+  const map = renderRouteMap(tracking) || '<p class="tracking-map-empty">' +
+    tr('暂无可用于绘制路线的地点。', 'Route locations are unavailable.') + '</p>';
+  const sourceURL = typeof tracking.source_url === 'string' && tracking.source_url.startsWith('https://') ? tracking.source_url : '';
+  const checked = activityDate(tracking.queried_at, {dateStyle:'medium', timeStyle:'short'});
+  const source = '<div class="tracking-source"><span class="pill">' +
+    (preview ? tr('演示数据', 'Demo data') : officialLabel) + '</span><span>' + esc(tracking.tracking_number) +
+    '</span>' + (checked ? '<span>' + tr('查询时间 ', 'Last checked ') + esc(checked) + '</span>' : '') +
+    (sourceURL ? '<a target="_blank" rel="noopener" href="' + esc(sourceURL) + '">' + tr('状态说明','Status guide') + ' ↗</a>' : '') + '</div>';
+  $('tracking-output').innerHTML = '<div class="tracking-workspace"><div class="tracking-map-column">' + map +
+    '<div class="tracking-strip"><strong>' + esc(caption) + '</strong><span>' + tr('预计送达：','Estimated delivery: ') + esc(eta) +
+    '</span></div></div><div class="tracking-detail"><div class="tracking-heading"><h2>' + tr('当前状态：','Current status: ') +
+    '<strong>' + esc(caption) + '</strong></h2><button type="button" data-ask class="text-button tracking-ask" aria-controls="assistant-drawer" aria-expanded="' +
+    String(!assistant.hidden) + '"><svg class="line-icon" aria-hidden="true"><use href="#icon-send"/></svg>' + tr('询问 AI','Ask AI') +
+    '</button></div>' + (details ? '<p class="tracking-service">' + details + '</p>' : '') + scanIssue +
+    (timeline ? '<ol class="timeline">' + timeline + '</ol>' : '<p>' + tr('暂无运输事件。', 'No scans available yet.') + '</p>') + source + '</div></div>';
 }
 function renderProgress() {
   const progress = task.progress;
-  if (!progress) { $('task-progress').textContent = ''; return; }
-  const views = {details:'rates', service:'rates', documents:'documents', summary:'summary'};
-  $('task-progress').innerHTML = progress.steps.map((step, i) => '<button class="step ' + esc(step.status) + '" data-go="' + views[step.id] + '"><b>' + (step.status === 'complete' ? '✓' : i + 1) + '</b><span>' + esc(step.title) + '<small>' + esc(step.description) + '</small></span></button>').join('');
-  const step = progress.steps.find(s => s.status === 'current');
-  $('next-step').textContent = step?.description || '可以查看已整理的准备清单。';
-  $('next-action').textContent = ({rates:task.quote?.status === 'estimated' ? '比较并选择参考方案' : '补充信息并估算',documents:'核对寄件文件',summary:'查看准备清单'})[progress.next_view] || '继续准备';
+  const current = dirty('rates') ? 0 : task.selected_service ? 2 : task.quote?.status === 'estimated' ? 1 : 0;
+  [...$('shipping-steps').children].forEach((step, index) => {
+    step.classList.toggle('current', index === current);
+    step.classList.toggle('complete', index < current);
+    if (index === current) step.setAttribute('aria-current', 'step');
+    else step.removeAttribute('aria-current');
+  });
+  $('step-quotes').disabled = !task.quote;
+  if (!progress) { $('task-progress').replaceChildren(); return; }
+  $('task-progress').innerHTML = progress.steps.map(step =>
+    '<button class="step ' + esc(step.status) + '" data-go="' + progressSteps[step.id][2] + '"' +
+    (step.status === 'current' ? ' aria-current="step"' : '') + '>' +
+    (step.status === 'complete' ? '✓ ' : '') + tr(...progressSteps[step.id]) + '</button>').join('');
 }
 function renderSummary() {
-  const selected = task.selected_service, progress = task.progress;
+  const {selected_service:selected, progress, fields:f} = task;
   const pendingDrafts = dirty('rates') || dirty('documents');
-  $('summary-output').innerHTML = (pendingDrafts ? '<div class="draft-status">你还有未保存草稿。下面仅显示任务中已保存的内容，请先保存并检查后再打印。</div>' : '') + '<article class="card"><div class="card-head"><div><h2>' + (progress?.ready_for_summary && !pendingDrafts ? '寄件准备信息已整理' : '还有信息需要补齐') + '</h2><p>' + (task.is_demo ? '这是虚构示例任务，以下内容用于演示。' : '这份清单记录参考方案、文件检查和下一步核验事项。') + '</p></div><button class="button secondary" id="print-summary" data-mutation>打印／保存准备清单</button></div><div class="summary-grid"><div><h3>包裹与路线</h3><p>' + esc(task.fields.origin_province || '起运地待填写') + ' → ' + esc(task.fields.destination_city || '美国') + ' ' + esc(task.fields.destination_zip || '') + '<br>' + esc(task.fields.goods || '货品待填写') + '<br>' + esc(task.fields.weight_kg ?? '—') + ' kg · ' + [task.fields.length_cm,task.fields.width_cm,task.fields.height_cm].map(v => esc(v ?? '—')).join(' × ') + ' cm</p><h3>参考方案</h3>' + (selected ? '<p>' + esc(selected.service) + ' · ' + esc(serviceNames[selected.service] || selected.name) + '<br>已知参考小计：¥' + money(selected.known_subtotal) + ' CNY</p>' : '<p>尚未选择参考方案。</p><button class="text-button" data-go="rates">去比较并选择方案</button>') + '</div><div><h3>准备进度</h3><ul>' + (progress?.steps || []).filter(s => s.id !== 'summary').map(s => '<li>' + (s.status === 'complete' ? '✓ ' : '○ ') + esc(s.title) + '：' + esc(s.description) + '</li>').join('') + '</ul><h3>向承运人核验</h3><ul>' + (task.quote?.pending || ['服务覆盖、适用价格和最终费用','所需清关文件及送达安排']).map(p => '<li>' + esc(p) + '</li>').join('') + '</ul></div></div><p class="quote-note">准备清单不代表已经寄件或承运人已接受货物。文件仍需核对进口人、HS编码和签字。</p></article>';
+  const route = [f.origin_province || tr('待填写', 'Origin needed'), f.destination_city || tr('美国', 'United States')].join(' → ');
+  const size = [f.length_cm, f.width_cm, f.height_cm].every(Boolean)
+    ? [f.length_cm, f.width_cm, f.height_cm].join(' × ') + ' cm' : '';
+  const facts = [f.goods, f.weight_kg ? f.weight_kg + ' kg' : '', size].filter(Boolean).map(esc).join(' · ');
+  const progressItems = (progress?.steps || []).filter(step => step.id !== 'summary').map(step =>
+    '<li>' + (step.status === 'complete' ? '✓ ' : '○ ') + tr(...progressSteps[step.id]) +
+    (language === 'zh' ? ' · ' + esc(step.description) : '') + '</li>').join('');
+  const pending = task.quote?.pending || [
+    tr('服务覆盖、适用价格和最终费用','Service coverage and final charges'),
+    tr('清关文件及送达安排','Customs paperwork and delivery arrangements')
+  ];
+  const draft = pendingDrafts ? '<p class="draft-status">' +
+    tr('清单仅显示已保存内容。请先保存草稿再打印。','This checklist shows saved details. Save your drafts before printing.') + '</p>' : '';
+  $('summary-output').innerHTML = draft + '<article class="card"><div class="card-head"><h2>' +
+    (progress?.ready_for_summary && !pendingDrafts ? tr('寄件信息已整理','Shipment details ready') :
+      tr('仍需补齐信息','Details to complete')) + '</h2>' +
+    '<button class="button secondary" id="print-summary" data-mutation>' +
+    tr('打印清单','Print checklist') + '</button></div>' +
+    (task.is_demo ? '<span class="pill amber">' + tr('示例任务','Sample shipment') + '</span>' : '') +
+    '<div class="summary-grid"><div><h3>' + tr('包裹与路线','Parcel and route') +
+    '</h3><p>' + esc(route) + (f.destination_zip ? ' ' + esc(f.destination_zip) : '') +
+    (facts ? '<br>' + facts : '') + '</p><h3>' + tr('参考方案','Selected service') + '</h3>' +
+    (selected ? '<p>' + esc(serviceName(selected.service, selected.name)) + ' · ¥' +
+      money(selected.known_subtotal) + ' CNY</p>' :
+      '<button class="text-button" data-go="rates">' + tr('比较并选择方案','Compare rates') + ' →</button>') +
+    '</div><div><h3>' + tr('准备进度','Preparation') + '</h3><ul>' + progressItems +
+    '</ul><h3>' + tr('向承运人核验','Confirm with the carrier') + '</h3><ul>' +
+    pending.map(item => '<li>' + esc(pendingCost(item)) + '</li>').join('') + '</ul></div></div></article>';
 }
 function render() {
   if (!task) return;
   storageSet('parcel-task-id', task.id);
-  $('task-short').textContent = task.is_demo ? '演示任务 · 虚构数据' : '当前寄件任务';
-  $('route-origin').textContent = task.fields.origin_province || '待填写';
-  $('route-dest').textContent = task.fields.destination_city || '美国 · 待填写';
-  $('route-zip').textContent = task.fields.destination_zip ? '美国邮编 ' + task.fields.destination_zip : '美国邮编待填写';
+
+  $('task-short').hidden = !task.is_demo;
+  $('task-short').textContent = tr('示例任务', 'Sample shipment');
   const f = task.fields;
-  $('task-details').innerHTML = [['货品',f.goods],['实际重量',f.weight_kg ? f.weight_kg + ' kg' : null],['尺寸',[f.length_cm,f.width_cm,f.height_cm].every(Boolean) ? [f.length_cm,f.width_cm,f.height_cm].join(' × ') + ' cm' : null],['预算',f.budget_cny != null ? '¥' + money(f.budget_cny) : null],['期望送达',f.deadline]].map(([label,value]) => '<div><dt>' + label + '</dt><dd>' + esc(value || '待填写') + '</dd></div>').join('');
+
   for (const kind of Object.keys(forms)) {
     const latest = savedValues(kind);
     let values = latest;
@@ -276,38 +704,67 @@ function render() {
     fill(forms[kind], values);
     if (kind === 'documents') { $('item-rows').replaceChildren(); (values.items?.length ? values.items : [{}]).forEach(itemRow); }
   }
-  $('document-shipment').textContent = '本次货品：' + (f.goods || '待填写') + '；实际重量：' + (f.weight_kg ?? '待填写') + ' kg。' + (task.is_demo ? ' 当前联系人与地址为演示占位信息。' : '');
-  $('selected-overview').innerHTML = '<h3>参考方案</h3>' + (task.selected_service ? '<p>' + esc(task.selected_service.service) + ' · ¥' + money(task.selected_service.known_subtotal) + ' CNY<br>已知参考小计，仍有待核验项目。</p><button class="text-button" data-go="summary">查看准备清单 →</button>' : '<p>尚未选择。比较费用后，选一个参考方案继续准备文件。</p><button class="text-button" data-go="rates">查看参考费用 →</button>');
-  renderMessages(); renderDraftStatus(); renderQuote(); renderChecks(); renderTracking(); renderProgress(); renderSummary(); fitConversation();
+
+  $('document-shipment').textContent = f.goods ? f.goods + (f.weight_kg ? ' · ' + f.weight_kg + ' kg' : '') : '';
+  renderMessages(); renderDraftStatus(); renderQuote(); renderChecks(); renderTracking(); renderProgress(); renderSummary();
+  renderAssistantShipment();
   if (busy) lockNewControls();
 }
-function fitConversation() {
-  if (currentView !== 'workspace') return;
-  const card = document.querySelector('.conversation');
-  const top = card.getBoundingClientRect().top + window.scrollY;
-  card.style.height = Math.max(285, window.innerHeight - top - 16) + 'px';
+function activityDate(value, options = {month:'short', day:'numeric'}) {
+  if (!value || Number.isNaN(new Date(value).valueOf())) return '';
+  return new Date(value).toLocaleString(tr('zh-CN', 'en-US'), options);
 }
-window.addEventListener('resize', fitConversation);
+function formatDeliveryDate(value) {
+  if (!value) return '';
+  const options = /^\d{4}-\d{2}-\d{2}$/.test(value) ? {dateStyle:'medium', timeZone:'UTC'} : {dateStyle:'medium'};
+  return activityDate(value, options) || value;
+}
 function taskLabel(row) {
-  return (row.is_demo ? '示例｜' : '') + (row.origin || '待填起运地') + ' → ' + (row.city || '美国') + '｜' + (row.goods || '新任务') + (row.weight_kg ? ' · ' + row.weight_kg + 'kg' : '') + ' · ' + new Date(row.updated_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  const route = [row.origin, row.city || row.destination_zip].filter(Boolean).join(' → ');
+  return [row.is_demo ? tr('示例任务', 'Sample shipment') : '', row.goods, route,
+    row.weight_kg ? row.weight_kg + ' kg' : ''].filter(Boolean).join(' · ') ||
+    tr('未命名寄件', 'Untitled shipment');
+}
+function renderHistory() {
+  $('task-history').innerHTML = historyRows.map(row => '<option value="' + esc(row.id) + '">' + esc(taskLabel(row)) + '</option>').join('');
+  $('task-history').value = task.id;
+  const entries = historyRows.filter(row => !row.is_demo).flatMap(row => {
+    const entries = [];
+    if (row.origin || row.goods || row.selected_service) entries.push({title:taskLabel(row), date:row.updated_at, id:row.id, view:'rates'});
+    if (row.tracking?.number) entries.push({title:trackingStatus(row.tracking.status) + ' · ' + row.tracking.number, date:row.tracking.queried_at, id:row.id, view:'tracking'});
+    return entries;
+  }).sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0)).slice(0, 3);
+  $('recent-activity').innerHTML = entries.length ? entries.map(entry =>
+    '<button class="activity-entry" type="button" data-history-id="' + esc(entry.id) + '" data-history-view="' + entry.view + '" data-mutation>' +
+    '<span><strong>' + esc(entry.title) + '</strong><time>' + esc(activityDate(entry.date)) +
+    '</time></span><span aria-hidden="true">→</span></button>').join('') :
+    '<p class="activity-empty">' + tr('还没有寄件或追踪记录。', 'No shipments or tracking activity yet.') + '</p>';
+  if (busy) lockNewControls();
 }
 async function refreshHistory() {
-  const rows = (await api('/api/tasks')).tasks;
-  $('task-history').innerHTML = rows.map(row => '<option value="' + esc(row.id) + '">' + esc(taskLabel(row)) + '</option>').join('');
-  if (task) $('task-history').value = task.id;
+  historyRows = (await api('/api/tasks')).tasks;
+  renderHistory();
 }
 function updateCurrentHistory() {
-  const option = [...$('task-history').options].find(o => o.value === task.id);
-  if (option) option.textContent = taskLabel({id:task.id,...task.fields, origin:task.fields.origin_province, city:task.fields.destination_city, updated_at:task.updated_at, is_demo:task.is_demo});
+  const f = task.fields, tracking = task.tracking;
+  const row = {id:task.id, origin:f.origin_province, city:f.destination_city, destination_zip:f.destination_zip,
+    goods:f.goods, weight_kg:f.weight_kg, updated_at:task.updated_at, is_demo:task.is_demo,
+    selected_service:task.selected_service?.service,
+    tracking:tracking?.data_type === 'live_api' ? {number:tracking.tracking_number, status:tracking.status, queried_at:tracking.queried_at} : null};
+  historyRows = [row, ...historyRows.filter(old => old.id !== task.id)];
+  renderHistory();
 }
 async function switchTo(next) {
   if (task) storageSet('parcel-chat-draft:' + task.id, $('chat-message').value);
   task = next; restoreDrafts(); lastMessageKey = '';
+  sampleTracking = null;
   $('chat-message').value = storageGet('parcel-chat-draft:' + task.id) || '';
   $('tracking-number').value = task.tracking?.data_type === 'live_api' ? task.tracking.tracking_number : '';
+  updateTrackingConsent();
   $('tracking-live').checked = false;
+  $('rate-options').open = false;
   for (const kind of ['rates','documents','tracking']) formError(kind, '');
-  render(); await refreshHistory(); go('workspace');
+  render(); await refreshHistory();
 }
 function renderCards(documents) {
   $('search-output').innerHTML = documents.length ? documents.map(d => '<article class="card knowledge-card"><span class="retrieval-id">' + esc(d.id) + '</span><h3>' + esc(d.title) + '</h3><p>' + esc(d.text) + '</p><div class="source-footer"><span>资料日期 ' + esc(d.source_date || d.date || '见来源') + (d.page ? ' · 第 ' + esc(d.page) + ' 页' : '') + '</span><a target="_blank" rel="noopener" href="' + esc(d.source_url) + '">查看来源 ↗</a></div></article>').join('') : '<article class="card"><h3>没有找到匹配依据</h3><p>请换一个具体问题，例如体积重、货品描述或住宅派送。</p></article>';
@@ -335,14 +792,57 @@ function openPrintable(kind) {
 }
 
 // Events are attached once; result cards use delegated handlers after rendering.
-all('[data-view]').forEach(button => { button.onclick = () => go(button.dataset.view); });
+
+for (const link of all('[data-view]')) {
+  link.addEventListener('click', event => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    go(link.dataset.view, true);
+  });
+}
+window.addEventListener('popstate', () => go(viewForPath(), true, false));
+go(viewForPath(), false, false);
+$('close-assistant').onclick = closeAssistant;
+document.addEventListener('keydown', event => {
+  if ($('assistant-drawer').hidden) return;
+  if (event.key === 'Escape' && (!assistant.classList.contains('assistant-inline') || assistant.contains(document.activeElement))) { closeAssistant(); return; }
+  if (event.key !== 'Tab' || !smallScreen.matches) return;
+  const focusable = [...$('assistant-drawer').querySelectorAll('button, a[href], input, select, textarea, summary')]
+    .filter(element => !element.disabled && element.getClientRects().length);
+  const first = focusable[0], last = focusable.at(-1);
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+  if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+});
+
 document.addEventListener('click', event => {
+  const ask = event.target.closest('[data-ask]');
+  if (ask) { openAssistant(ask); return; }
   if (event.target.closest('[data-model-settings]')) { openModelSettings(); return; }
-  const goButton = event.target.closest('[data-go]'); if (goButton) { go(goButton.dataset.go); return; }
+  if (event.target.closest('[data-form-updates]')) {
+    if (smallScreen.matches) closeAssistant();
+    $('rate-options').open = true;
+    go('rates', true);
+    return;
+  }
+  const entry = event.target.closest('[data-history-id]');
+  if (entry) {
+    run(tr('正在打开记录…', 'Opening record…'), async () => {
+      if (entry.dataset.historyId !== task.id) await switchTo(await api('/api/task?id=' + encodeURIComponent(entry.dataset.historyId)));
+      go(entry.dataset.historyView, true);
+      if (entry.dataset.historyView === 'tracking') {
+        sampleTracking = null;
+        renderTracking();
+        revealResult('tracking-output');
+      }
+    });
+    return;
+  }
+  const goButton = event.target.closest('[data-go]');
+  if (goButton) { go(goButton.dataset.go, true); return; }
   const choose = event.target.closest('[data-select]');
   if (choose) run('正在保存参考方案…', async () => {
     if (dirty('rates')) throw new Error('请先保存包裹修改并重新估算。');
-    await action('/api/select', {service:choose.dataset.select}); go('documents'); toast('参考方案已选，接着核对寄件文件。');
+    await action('/api/select', {service:choose.dataset.select}); go('documents', true);
   });
   const issueButton = event.target.closest('[data-issue]');
   if (issueButton) {
@@ -366,8 +866,14 @@ $('chat-form').onsubmit = event => {
   }).finally(() => { chatPending = false; $('chat-pending').hidden = true; });
 };
 $('chat-message').onkeydown = event => { if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); $('chat-form').requestSubmit(); } };
-all('[data-message]').forEach(button => { button.onclick = () => { if (!busy) { $('chat-message').value = button.dataset.message; $('chat-form').requestSubmit(); } }; });
-$('rate-form').onsubmit = event => { event.preventDefault(); run('正在保存包裹并重新估算…', async () => { await action('/api/quote', {fields:fieldsForSave('rates')}, 'rates'); toast(task.quote?.status === 'estimated' ? '参考费用已重新计算，请选择方案。' : '需求已保存，请查看需要补充的信息。'); }, 'rates'); };
+all('[data-message]').forEach(button => {
+  button.onclick = () => {
+    $('chat-message').value = tr(button.dataset.message, button.dataset.messageEn);
+    $('chat-message').dispatchEvent(new Event('input'));
+    $('chat-message').focus();
+  };
+});
+$('rate-form').onsubmit = event => { event.preventDefault(); run(tr('正在比较运费…', 'Comparing rates…'), async () => { await action('/api/quote', {fields:fieldsForSave('rates')}, 'rates'); revealResult('quote-output'); }, 'rates'); };
 $('document-form').onsubmit = event => { event.preventDefault(); run('正在保存并核对文件…', saveDocuments, 'documents'); };
 $('discard-rates').onclick = () => { if (!busy) discardDraft('rates'); };
 $('discard-documents').onclick = () => { if (!busy) discardDraft('documents'); };
@@ -393,12 +899,43 @@ for (const kind of ['invoice','packing']) {
     }, 'documents');
   };
 }
-$('tracking-form').onsubmit = event => { event.preventDefault(); run('正在向 Ship24 查询此运单…', async () => { if (!$('tracking-live').checked) throw new Error('请先勾选使用 Ship24 查询此单号。'); const number = $('tracking-number').value.trim(); if (number === sample) throw new Error('这是官方示例单号，请使用下方“查看官方物流示例”。'); await action('/api/track', {number, allow_live:true}); }, 'tracking'); };
-$('track-demo').onclick = () => run('正在读取独立官方示例…', () => action('/api/track', {number:sample}));
+$('tracking-form').onsubmit = event => {
+  event.preventDefault();
+  if ($('tracking-number').value.trim().toUpperCase() === previewTracking.tracking_number) {
+    showTrackingPreview();
+    return;
+  }
+  run(tr('正在向 Ship24 查询…', 'Checking with Ship24…'), async () => {
+    if (!$('tracking-live').checked) throw new Error(tr('请先同意通过 Ship24 查询。', 'Allow the Ship24 lookup first.'));
+    const number = $('tracking-number').value.trim();
+    if (number === sample) throw new Error(tr('请点击“查看官方物流示例”。', 'Use the official sample link below.'));
+    await action('/api/track', {number, allow_live:true});
+    sampleTracking = null;
+    renderTracking();
+    revealResult('tracking-output');
+  }, 'tracking');
+};
+$('step-quotes').onclick = () => revealResult('quote-output');
+function showTrackingPreview() {
+  if (!task) return;
+  formError('tracking', '');
+  sampleTracking = previewTracking;
+  renderTracking();
+  revealResult('tracking-output');
+}
+$('track-preview').onclick = showTrackingPreview;
+$('tracking-number').addEventListener('input', updateTrackingConsent);
+function updateTrackingConsent() {
+  $('tracking-live').required = $('tracking-number').value.trim().toUpperCase() !== previewTracking.tracking_number;
+}
+$('track-demo').onclick = () => run(tr('正在加载示例…', 'Loading tracking sample…'), async () => {
+  sampleTracking = await api('/api/track/sample');
+  renderTracking();
+  revealResult('tracking-output');
+});
 $('search-form').onsubmit = event => { event.preventDefault(); run('正在检索资料…', async () => { renderCards((await api('/api/search', {query:$('search-query').value, method:$('search-method').value})).results); knowledgeLoaded = true; }); };
-$('new-task').onclick = () => run('正在新建寄件任务…', async () => { await switchTo(await api('/api/tasks', {})); toast('新任务已创建，之前的任务可从左侧列表找回。'); });
-$('task-history').onchange = () => run('正在载入已有任务…', async () => { const id = $('task-history').value; try { if (id !== task.id) await switchTo(await api('/api/task?id=' + encodeURIComponent(id))); } catch (error) { $('task-history').value = task.id; throw error; } });
-$('next-action').onclick = () => go(task.progress?.next_view || 'rates');
+$('new-task').onclick = () => run('正在新建寄件任务…', async () => { await switchTo(await api('/api/tasks', {})); go('rates', true); toast(tr('新寄件已创建', 'New shipment created')); });
+$('task-history').onchange = () => run('正在载入已有任务…', async () => { const id = $('task-history').value; try { if (id !== task.id) await switchTo(await api('/api/task?id=' + encodeURIComponent(id))); go('rates', true); } catch (error) { $('task-history').value = task.id; throw error; } });
 $('export-task').onclick = () => {
   const blob = new Blob([JSON.stringify(task, null, 2)], {type:'application/json'}), a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = 'parcel-task-' + task.id.slice(0,8) + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href),1000);
@@ -407,21 +944,21 @@ $('export-task').onclick = () => {
 $('load-demo').onclick = () => run('正在创建独立示例任务…', async () => {
   await switchTo(await api('/api/tasks', {demo:true}));
   await action('/api/task', {fields:{origin_province:'Shanghai',destination_country:'US',destination_state:'CA',destination_city:'Los Angeles',destination_zip:'90001',goods:'Cotton T-shirts',weight_kg:10,length_cm:30,width_cm:20,height_cm:10,budget_cny:5000,oda_tier:'unknown',currency:'USD',country_of_origin:'CN',invoice_number:'DEMO-001',ship_date:new Date().toLocaleDateString('sv-SE'),sender_name:'Demo Sender',sender_address:'Example origin address · fictitious',sender_phone:'00000000000',recipient_name:'Demo Recipient',recipient_address:'Example destination address · fictitious',recipient_phone:'00000000000',invoice_total:50,items:[{description:'Cotton T-shirt',quantity:2,packing_quantity:2,unit_price:25}]}});
-  await action('/api/chat', {message:'请估算当前运费'}); await refreshHistory(); toast('示例任务已载入。可试算重量，或比较并选择参考方案。');
+  await action('/api/quote');
+  go('rates', true);
+  revealResult('quote-output');
+  toast(tr('示例寄件已载入', 'Sample shipment loaded'));
 });
 
 function renderModelSettings() {
   const configured = !!modelSettings?.configured;
-  $('mode-badge').textContent = configured ? 'AI 已配置' : 'AI 未连接';
-  $('mode-note').textContent = configured ? modelSettings.model : '尚未连接 AI 模型';
-  $('enable-model').hidden = configured;
-  $('open-model-settings').textContent = configured ? 'AI 设置' : '启用 AI 对话';
+  $('open-model-settings').textContent = configured ? tr('设置', 'Settings') : tr('连接 AI', 'Connect AI');
   $('model-name').value = modelSettings?.model || '';
   $('model-base-url').value = modelSettings?.base_url || 'https://api.openai.com/v1';
   $('model-api-style').value = modelSettings?.api_style || 'responses';
   $('model-key').required = !modelSettings?.has_api_key;
-  $('model-key').placeholder = modelSettings?.has_api_key ? '留空保留已保存的密钥' : '填写该服务的 API Key';
-  $('model-settings-status').textContent = configured ? '已配置 ' + modelSettings.model : '';
+  $('model-key').placeholder = modelSettings?.has_api_key ? tr('留空保留现有密钥', 'Leave blank to keep your key') : tr('填写该服务的 API Key', 'Enter the provider’s API key');
+  $('model-settings-status').textContent = '';
 }
 async function loadModelSettings() {
   modelSettings = await api('/api/model/settings');
@@ -429,13 +966,13 @@ async function loadModelSettings() {
 }
 function openModelSettings() {
   $('model-setup').hidden = false;
-  $('model-setup').scrollIntoView({block:'start',behavior:'smooth'});
-  $('model-name').focus({preventScroll:true});
-  fitConversation();
+  $('model-name').focus();
 }
 $('open-model-settings').onclick = openModelSettings;
-$('enable-model').onclick = openModelSettings;
-$('close-model-settings').onclick = () => { $('model-setup').hidden = true; fitConversation(); };
+$('close-model-settings').onclick = () => {
+  $('model-setup').hidden = true;
+  $('open-model-settings').focus();
+};
 $('model-settings-form').onsubmit = event => {
   event.preventDefault();
   const error = $('model-settings-error'); error.hidden = true; error.textContent = '';
@@ -445,8 +982,9 @@ $('model-settings-form').onsubmit = event => {
       await api('/api/model/settings', values);
       $('model-key').value = '';
       health = await api('/api/health'); await loadModelSettings();
-      $('model-setup').hidden = true; fitConversation();
-      toast('设置已保存，下一条消息会尝试使用 ' + modelSettings.model + '。');
+      $('model-setup').hidden = true;
+      $('chat-message').focus();
+      toast(tr('设置已保存', 'Settings saved'));
     } catch (failure) {
       error.hidden = false; error.textContent = failure.message; throw failure;
     }
@@ -460,5 +998,5 @@ $('model-settings-form').onsubmit = event => {
     const id = storageGet('parcel-task-id'); let restored;
     if (id) { try { restored = await api('/api/task?id=' + encodeURIComponent(id)); } catch (error) { if (!error.message.includes('不存在')) throw error; } }
     await switchTo(restored || await api('/api/tasks', {}));
-  } catch (error) { $('save-status').textContent = '连接失败'; $('messages').innerHTML = '<div class="form-error">' + esc(error.message) + ' <button class="text-button" onclick="location.reload()">重新连接</button></div>'; toast(error.message, true); }
+  } catch (error) { $('messages').innerHTML = '<div class="form-error">' + esc(error.message) + ' <button class="text-button" onclick="location.reload()">重新连接</button></div>'; toast(error.message, true); }
 })();

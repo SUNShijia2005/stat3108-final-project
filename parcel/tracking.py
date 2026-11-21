@@ -34,7 +34,12 @@ def summarize(result,data_type,queried_at):
             return value.replace(tzinfo=value.tzinfo or timezone.utc).timestamp()
         except (ValueError,TypeError): return float("-inf")
     events.sort(key=event_time,reverse=True)
+    delivery=shipment.get("delivery") or {}
+    recipient=shipment.get("recipient") or {}
     return {"tracking_number":tracker.get("trackingNumber"),"status":shipment.get("statusMilestone"),"events":events,
+            "origin_country":shipment.get("originCountryCode"),"destination_country":shipment.get("destinationCountryCode"),
+            "destination_city":recipient.get("city"),"service":delivery.get("service"),
+            "estimated_delivery":delivery.get("courierEstimatedDeliveryDate") or delivery.get("estimatedDeliveryDate"),
             "data_type":data_type,"queried_at":queried_at,"source_url":"https://docs.ship24.com/status"}
 
 
